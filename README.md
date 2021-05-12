@@ -1,5 +1,1 @@
-d
-sdfsdf
-sdfsd
-asdfsadfsdf
-ffff
+Font for icon "Bangla MN"

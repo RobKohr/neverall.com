@@ -1,0 +1,137 @@
+//https://www.youtube.com/watch?v=C1rQQ_YpgcI
+// Switch to using different shades of gray, and then add colors
+
+$color-gray-medium: #2e3236;
+$color-gray-darker: #25282b;
+$color-gray-darkest: #202326;
+$color-logo-basket-red: #d40454;
+$color-logo-godot-blue: #478cbf;
+
+$color-background-content: $color-gray-medium;
+$color-background-menu: $color-gray-darker;
+$color-background-page: $color-gray-darkest;
+$color-menu-header: $color-logo-basket-red;
+
+$filter-menu-width: 200px;
+$navbar-height: 66px;
+$logo-height: 150px;
+body {
+  background: $color-background-page;
+  color: white;
+}
+
+fieldset {
+  label {
+    display: block;
+  }
+  .input-wrapper {
+    margin: 1em 0;
+  }
+
+  input {
+    &[type='text'],
+    &[type='password'],
+    &[type='submit'] {
+      padding: 0.5em;
+      border-radius: 0.5em;
+      width: 95%;
+      max-width: 500px;
+    }
+    &[type='submit'] {
+      margin: 1em 0;
+      height: 3em;
+      max-width: 300px;
+      font-size: 1.3em;
+      &:hover {
+        background-color: $color-logo-godot-blue;
+      }
+    }
+  }
+}
+li {
+  padding: 1px;
+}
+a {
+  color: white;
+  text-decoration: none;
+  &:hover {
+    color: $color-logo-godot-blue;
+  }
+}
+.App {
+  width: 95%;
+  max-width: 2000px;
+  #content {
+    padding: 1em;
+    position: absolute;
+    top: $navbar-height;
+    left: $filter-menu-width;
+    right: 0px;
+    bottom: 0px;
+    background-color: $color-background-content;
+    z-index: -2;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  #filters {
+    box-sizing: border-box;
+    padding: 0px 1em;
+    z-index: 10;
+    position: fixed;
+    top: $logo-height;
+    bottom: 0px;
+    left: 0px;
+    overflow-y: auto;
+    right: $filter-menu-width;
+    width: $filter-menu-width;
+    background-color: $color-background-menu;
+    ul {
+      list-style-type: none;
+    }
+    > ul {
+      padding-left: 0px;
+    }
+    h2 {
+      color: $color-menu-header;
+      font-size: 0.8em;
+      text-transform: uppercase;
+    }
+  }
+  .logo {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: $color-background-menu;
+    width: $filter-menu-width;
+    height: $logo-height;
+    #logo-container {
+      width: 50%;
+      margin: 10px auto;
+      img {
+        width: 100%;
+      }
+    }
+    h1 {
+      text-align: center;
+      color: $color-logo-godot-blue;
+      font-size: 1.2em;
+    }
+  }
+
+  #navbar {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    background-color: $color-background-menu;
+    text-align: right;
+    height: $navbar-height;
+    z-index: -1;
+    li {
+      display: inline-block;
+      list-style: none;
+      padding: 0.5em 1em;
+    }
+  }
+}

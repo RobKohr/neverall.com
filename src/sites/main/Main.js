@@ -4,7 +4,7 @@ import { Router, Link } from "@reach/router";
 export default function Main(props) {
   return (
     <div>
-      <div>logo</div>
+      <div>logo wrong</div>
       <nav>
         <Link to="/">Home</Link> <Link to="dashboard">Dashboard</Link>
       </nav>
@@ -19,7 +19,7 @@ export default function Main(props) {
 const Home = ({ app }) => (
   <div>
     <h2>Welcome {app.name}</h2>
-    <Link to="/assets/godot">Godot Asset Store</Link>
+    <Link to="/godot-asset-store">Godot Asset Store</Link>
   </div>
 );
 
