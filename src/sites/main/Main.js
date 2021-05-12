@@ -19,6 +19,7 @@ export default function Main(props) {
 const Home = ({ app }) => (
   <div>
     <h2>Welcome {app.name}</h2>
+    <Link to="/assets/godot">Godot Asset Store</Link>
   </div>
 );
 

@@ -1,5 +1,5 @@
 import "./App.css";
-import { Router, Link, Location } from "@reach/router";
+import { Location } from "@reach/router";
 import { domainNameAppMapping } from "./constants";
 import { lazy, Suspense } from "react";
 
