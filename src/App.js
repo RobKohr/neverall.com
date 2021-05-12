@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Router, Link, Location } from "@reach/router";
+import { domainNameAppMapping } from "./constants";
+import { lazy, Suspense } from "react";
 
-function App() {
+function App({ children }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Location>
+        {(props) => {
+          const app =
+            domainNameAppMapping[props.location.hostname] ||
+            domainNameAppMapping.default;
+
+          const Main = lazy(() => import(`./sites/${app.name}/Main`));
+
+          return (
+            <>
+              {Main && (
+                <Main app={app} location={props.location}>
+                  {children}
+                </Main>
+              )}
+            </>
+          );
+        }}
+      </Location>
+    </Suspense>
   );
 }
 
