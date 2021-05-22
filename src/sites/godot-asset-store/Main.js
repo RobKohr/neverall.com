@@ -1,37 +1,36 @@
-import React, { useContext } from "react";
-import { Router, Link } from "@reach/router";
-import Filters from "components/Filters";
+import React from "react";
+import { Router } from "@reach/router";
+import Filters from "./components/Filters";
 import Lipsum from "components/Lipsum";
 import SignIn from "pages/SignIn";
 import Register from "pages/Register";
-import { StateContext } from "App";
-export default function Main(props) {
-  const app = useContext(StateContext);
-  console.log({ app });
+import A from "components/A";
+
+export default function Main({ app }) {
   return (
     <div className="asset-store">
       <div id="navbar">
         <ul>
           <li>About</li>
           <li>
-            <Link to="signin">
+            <A to="signin">
               <i className="icon-login" />
               Sign In
-            </Link>
+            </A>
           </li>
           <li>
-            <Link to="/logout">Logout</Link>
+            <A to="logout">Logout</A>
           </li>
           <li>Upgrade</li>
         </ul>
       </div>
       <div className="logo">
-        <Link to="/">
+        <A to="">
           <div id="logo-container">
             <img src="/images/icon.png" alt="logo" />
           </div>
           <h1>Godot Asset Store</h1>
-        </Link>
+        </A>
       </div>
       <Filters />
       <div id="content">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 export default function Filters() {
   return (
     <div id="filters">
@@ -34,30 +34,16 @@ export default function Filters() {
       </ul>
       <h2>Members</h2>
       <ul>
-        <li>
-          <input type="radio" /> Members only
-        </li>
-        <li>
-          <input type="radio" /> Non-members only
-        </li>
-        <li>
-          <input type="radio" checked /> Both
-        </li>
+        <li>* Members only</li>
+        <li>* Non-members only</li>
+        <li>* Both</li>
       </ul>
       <h2>Supported versions</h2>
       <ul>
-        <li>
-          <input type="checkbox" checked /> 4
-        </li>
-        <li>
-          <input type="checkbox" checked /> 3.4
-        </li>
-        <li>
-          <input type="checkbox" checked /> 3.3
-        </li>
-        <li>
-          <input type="checkbox" checked /> 3.2
-        </li>
+        <li>☑ 4</li>
+        <li>☑ 3.4</li>
+        <li>☑ 3.3</li>
+        <li>☑ 3.2</li>
       </ul>
     </div>
   );

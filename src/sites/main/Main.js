@@ -1,10 +1,13 @@
 import React from "react";
 import { Router, Link } from "@reach/router";
+import { ReactComponent as Logo } from "./neverall-logo.svg";
 
 export default function Main(props) {
   return (
     <div>
-      <div>logo wrong</div>
+      <div>
+        <Logo style={{ fill: "white" }} />x{" "}
+      </div>
       <nav>
         <Link to="/">Home</Link> <Link to="dashboard">Dashboard</Link>
       </nav>
