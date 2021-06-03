@@ -5,7 +5,7 @@ import Lipsum from "components/Lipsum";
 import SignIn from "pages/SignIn";
 import Register from "pages/Register";
 import A from "components/A";
-
+import logo from "./logo.png";
 export default function Main({ app }) {
   return (
     <div className="asset-store">
@@ -27,7 +27,7 @@ export default function Main({ app }) {
       <div className="logo">
         <A to="">
           <div id="logo-container">
-            <img src="/images/icon.png" alt="logo" />
+            <img src={logo} alt="logo" />
           </div>
           <h1>Godot Asset Store</h1>
         </A>

@@ -8,5 +8,5 @@ exports.register = joi.object({
   retypePassword: joi
     .string()
     .valid(joi.ref("password"))
-    .label("passwords don't match"),
+    .label("Retype Password"),
 });

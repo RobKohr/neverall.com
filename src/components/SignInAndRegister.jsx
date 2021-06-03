@@ -13,6 +13,12 @@ export default function SignInAndRegister({ title }) {
       setValues={setValues}
       schema={register}
       onSubmit={onSubmit}
+      remap={[
+        {
+          replaceField: "retypePassword",
+          replacement: "Re-type password much match",
+        },
+      ]}
     >
       <div className="page page-sign-in">
         <div>

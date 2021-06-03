@@ -12,12 +12,20 @@ export default function Form({
 }) {
   const [errors, setErrors] = useState(null);
   const [labels, setLabels] = useState({});
+  const [dirty, setDirty] = useState({});
   const updateValue = ({ name, value, label }) => {
     setValues({ ...values, [name]: value });
     if (!labels[name] && label) {
       setLabels({ ...labels, [name]: label });
     }
+    if (value && !dirty[name]) {
+      setFieldDirty(name);
+    }
+    validate();
   };
+  function setFieldDirty(name) {
+    setDirty({ ...dirty, [name]: true });
+  }
 
   const validate = () => {
     const validation = schema.validate(values, { abortEarly: false });
@@ -34,7 +42,15 @@ export default function Form({
       }}
     >
       <FormContext.Provider
-        value={{ values, setValues, updateValue, validate, errors }}
+        value={{
+          values,
+          setValues,
+          updateValue,
+          validate,
+          errors,
+          dirty,
+          setFieldDirty,
+        }}
       >
         {children}
       </FormContext.Provider>
@@ -61,6 +77,7 @@ export function remapErrorMessages({ errors, remap, labels }) {
         `"${labels[name]}"`
       );
     }
+    console.log(name);
     combinedRemap.forEach(({ original, replacement, name: replaceField }) => {
       if (original) {
         container.message = container.message.replace(original, replacement);

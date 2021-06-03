@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 
-export function FormError({ name, label, errors }) {
-  if (!errors || !errors[name]) return <div></div>;
+import { FormContext } from "./Form";
+
+export function FormError({ name, label }) {
+  const { errors, dirty } = useContext(FormContext);
+
+  if (!errors || !errors[name] || !dirty[name]) return <div></div>;
+
   return <div className="error">{errors[name].message}</div>;
 }

@@ -2,13 +2,20 @@ import React, { useContext } from "react";
 import { FormContext } from "./Form";
 import { FormError } from "./FormError";
 export default function Input({ name, type = "text", label }) {
-  const { updateValue, values, validate, errors, setDirty, dirtyFields } =
+  const { updateValue, values, validate, errors, setFieldDirty } =
     useContext(FormContext);
-  console.log("asdf");
+
   function onChange(e) {
     updateValue({ name, value: e.target.value, label });
   }
+  if (typeof values[name] === "undefined") {
+    values[name] = "";
+  }
 
+  function onBlur(e) {
+    validate();
+    setFieldDirty(name);
+  }
   return (
     <div className="input-wrapper">
       <label>{label}</label>
@@ -17,9 +24,9 @@ export default function Input({ name, type = "text", label }) {
         name={name}
         value={values[name]}
         onChange={onChange}
-        onBlur={validate}
+        onBlur={onBlur}
       />
-      <FormError name={name} label={label} errors={errors} />
+      <FormError name={name} label={label} />
     </div>
   );
 }
