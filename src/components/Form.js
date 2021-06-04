@@ -14,21 +14,24 @@ export default function Form({
   const [labels, setLabels] = useState({});
   const [dirty, setDirty] = useState({});
   const updateValue = ({ name, value, label }) => {
-    setValues({ ...values, [name]: value });
+    const updatedValues = { ...values, [name]: value };
+    setValues(updatedValues);
     if (!labels[name] && label) {
       setLabels({ ...labels, [name]: label });
     }
     if (value && !dirty[name]) {
       setFieldDirty(name);
     }
-    validate();
+    validate({ ...values, [name]: value });
   };
   function setFieldDirty(name) {
     setDirty({ ...dirty, [name]: true });
   }
 
-  const validate = () => {
-    const validation = schema.validate(values, { abortEarly: false });
+  const validate = (updatedValues) => {
+    const validation = schema.validate(updatedValues || values, {
+      abortEarly: false,
+    });
     const errors = validation?.error?.details;
     setErrors(errors ? remapErrorMessages({ errors, remap, labels }) : null);
   };

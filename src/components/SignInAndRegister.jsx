@@ -15,7 +15,7 @@ export default function SignInAndRegister({ title }) {
       onSubmit={onSubmit}
       remap={[
         {
-          replaceField: "retypePassword",
+          name: "retypePassword",
           replacement: "Re-type password much match",
         },
       ]}
