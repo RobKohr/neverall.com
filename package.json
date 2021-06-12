@@ -7,18 +7,34 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "bcryptjs": "^2.4.3",
+    "connect-mongodb-session": "^2.4.1",
+    "express-session": "^1.17.2",
     "joi": "^17.4.0",
+    "joi-to-swagger": "^5.2.0",
+    "joigoose": "^8.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.13",
+    "node-fetch": "^2.6.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "sass": "^1.32.13",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "BROWSER=firefox react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "server": "nodemon --ignore '**/*.test.js' --watch 'server' -r dotenv/config server/server.js dotenv_config_path=.env",
+    "build-and-serve": "npm run build; npm run server",
+    "server-test": "node_modules/mocha/bin/mocha server/**/test.initialize.js server/**/*.test.js server/**/test.cleanup.js",
+    "server-test-persist": "nodemon --watch 'server' --exec \"npm run server-test\" ",
+    "react-test": "react-scripts test",
+    "test": "npm run server-test",
+    "eject": "react-scripts eject",
+    "e2e": "./node_modules/.bin/cypress open"
   },
   "eslintConfig": {
     "extends": [

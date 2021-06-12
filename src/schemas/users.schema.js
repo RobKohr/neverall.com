@@ -10,3 +10,10 @@ exports.register = joi.object({
     .valid(joi.ref("password"))
     .label("Retype Password"),
 });
+
+exports.schema = joi.object({
+  username: joi.string().lowercase().trim().min(3).max(400).required(),
+  email: joi.string().trim(),
+  password: joi.string().trim().min(8).required(),
+  role: joi.allow("regular", "owner"),
+});
