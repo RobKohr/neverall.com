@@ -40,7 +40,7 @@ export default function Form({
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit(values);
+        onSubmit({ values });
         return false;
       }}
     >

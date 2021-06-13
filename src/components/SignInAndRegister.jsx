@@ -1,12 +1,47 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "../components/Input";
 import Submit from "../components/Submit";
 import Form from "./Form";
 import { register } from "../schemas/users.schema";
 import A from "./A";
+import { CookieContext } from "App";
+import { navigate } from "@reach/router";
+import fetchJson from "../utils/fetchJson";
+
 export default function SignInAndRegister({ title }) {
   const [values, setValues] = useState({ username: "", password: "" });
-  const onSubmit = ({ values }) => {};
+  const formType = title === "Login" ? "login" : "register";
+  const { setCookie } = useContext(CookieContext);
+  console.log({ setCookie });
+
+  function setErrorMessage(message) {
+    console.error(message);
+  }
+  const onSubmit = ({ values }) => {
+    const onSuccessfulSubmission = (res) => {
+      if (res.successMessage) {
+        if (formType === "login") {
+          setCookie("token", res.token);
+          setCookie("username", res.user.username);
+          setCookie("role", res.user.role);
+          setCookie("userId", res.user._id);
+        }
+        setErrorMessage("User logged in");
+        navigate(formType === "register" ? `/login` : `/`);
+      } else {
+        setErrorMessage(res.errorMessage);
+      }
+    };
+    fetchJson(`/api/users/${formType}`, {
+      method: "POST",
+      bodyObj: values,
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(onSuccessfulSubmission)
+      .catch((err) => {
+        console.error(err);
+      });
+  };
   return (
     <Form
       values={values}

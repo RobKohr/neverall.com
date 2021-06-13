@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { FormContext } from "./Form";
 import { FormError } from "./FormError";
 export default function Input({ name, type = "text", label }) {
-  const { updateValue, values, validate, errors, setFieldDirty } =
+  const { updateValue, values, validate, setFieldDirty } =
     useContext(FormContext);
 
   function onChange(e) {
