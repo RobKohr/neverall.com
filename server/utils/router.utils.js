@@ -83,7 +83,7 @@ function curryValidateBodySchema(schema) {
       ({ message }) => message
     );
     if (errorMessages?.length) {
-      res.json({
+      return res.status(400).json({
         errorMessages,
         errorCode: "VALIDATION_ERROR",
       });

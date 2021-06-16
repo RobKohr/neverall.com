@@ -1,56 +1,44 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const fetch = require('node-fetch');
-const assert = require('assert');
-const mongoose = require('mongoose');
-const { get } = require('lodash');
-const { UserModel } = require('../api/users/User.model');
-mongoose.connect('mongodb://localhost/' + process.env.dbName, {
+const fetch = require("node-fetch");
+const assert = require("assert");
+const mongoose = require("mongoose");
+const { get } = require("lodash");
+const { UserModel } = require("../api/users/User.model");
+mongoose.connect("mongodb://localhost/" + process.env.dbName, {
   useNewUrlParser: true,
 });
 
 const startServer = async () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      fetch('http://localhost:4001')
+      fetch("http://localhost:4001")
         .then(() => {
-          resolve('Server is running');
+          resolve("Server is running");
         })
         .catch(() => {
-          console.error('Server is not running');
+          console.error("Server is not running");
         });
     }, 1000);
   });
 };
 const getVars = () => {
   return {
-    baseUrl: 'http://localhost:4001',
+    baseUrl: "http://localhost:4001",
     regularUser: {
       username: `unit_test_regular_user`,
-      password: 'correct horse staple battery',
-      email: 'email@somewhere.com',
-      role: 'regular',
+      password: "correct horse staple battery",
+      email: "email@somewhere.com",
     },
     ownerUser: {
       username: `unit_test_owner_user`,
-      password: 'correct horse staple battery',
-      email: 'email@somewhere.com',
-      role: 'owner',
+      password: "correct horse staple battery",
+      email: "email@somewhere.com",
     },
     adminUser: {
       username: `unit_test_admin_user`,
-      password: 'correct horse staple battery',
-      email: 'email@somewhere.com',
-      role: 'regular', // this gets promoted on initialization
-    },
-    restaurant: {
-      name: 'unit_test restaurant',
-      averageRating: 0,
-      about:
-        'unit_test unit_test unit_test unit_test unit_test unit_test unit_test ',
-      photoUrl: 'https://pic.com/pic.png',
-      phone: '8675309',
-      address: '123 elm street',
+      password: "correct horse staple battery",
+      email: "email@somewhere.com",
     },
   };
 };
@@ -58,26 +46,26 @@ const getVars = () => {
 const { baseUrl, regularUser, ownerUser, adminUser } = getVars();
 const setupUnitTestUsers = async () => {
   await startServer();
-  await fetch(baseUrl + '/api/users/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json;charset=utf-8' },
+  await fetch(baseUrl + "/api/users/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify(regularUser),
   });
-  await fetch(baseUrl + '/api/users/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json;charset=utf-8' },
+  await fetch(baseUrl + "/api/users/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify(ownerUser),
   });
-  return await fetch(baseUrl + '/api/users/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json;charset=utf-8' },
+  return await fetch(baseUrl + "/api/users/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify(adminUser),
   })
     .then((res) => res.json())
     .then((res) => {
       UserModel.findOneAndUpdate(
         { username: adminUser.username },
-        { $set: { role: 'admin' } }
+        { $set: { role: "admin" } }
       ).exec();
     });
 };
@@ -89,9 +77,9 @@ const test200ReturnJson = (res) => {
 
 function loginUser({ user }) {
   return new Promise((resolve, reject) => {
-    fetch(getVars().baseUrl + '/api/users/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json;charset=utf-8' },
+    fetch(getVars().baseUrl + "/api/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json;charset=utf-8" },
       body: JSON.stringify(user),
     })
       .then((res) => {
@@ -100,7 +88,7 @@ function loginUser({ user }) {
       })
       .then((res) => {
         headers = {
-          'Content-Type': 'application/json;charset=utf-8',
+          "Content-Type": "application/json;charset=utf-8",
           Authorization: `Bearer ${res.token}`,
         };
         resolve({ headers, user: res.user });
