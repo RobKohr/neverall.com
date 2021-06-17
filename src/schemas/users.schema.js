@@ -1,7 +1,6 @@
 const joi = require("joi");
 
-exports.register = joi.object({
-  displayUsername: joi.string().default(joi.ref("password")),
+exports.registerSchema = joi.object({
   username: joi.string().lowercase().trim().min(3).max(400).required(),
   email: joi.string().trim(),
   password: joi.string().trim().min(8).required(),
@@ -11,9 +10,14 @@ exports.register = joi.object({
     .label("Retype Password"),
 });
 
+exports.loginSchema = joi.object({
+  username: joi.string().required(),
+  password: joi.string().required(),
+});
+
 exports.schema = joi.object({
   username: joi.string().lowercase().trim().min(3).max(400).required(),
+  displayUsername: joi.string().default(joi.ref("username")),
   email: joi.string().trim(),
   password: joi.string().trim().min(8).required(),
-  role: joi.allow("regular", "owner"),
 });

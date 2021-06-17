@@ -77,11 +77,7 @@ const test200ReturnJson = (res) => {
 
 function loginUser({ user }) {
   return new Promise((resolve, reject) => {
-    fetch(getVars().baseUrl + "/api/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json;charset=utf-8" },
-      body: JSON.stringify(user),
-    })
+    baseLoginUser({ user })
       .then((res) => {
         assert.strictEqual(res.status, 200);
         return res.json();
@@ -95,6 +91,16 @@ function loginUser({ user }) {
       });
   });
 }
+function baseLoginUser({ user }) {
+  return fetch(getVars().baseUrl + "/api/users/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json;charset=utf-8" },
+    body: JSON.stringify({
+      username: user.username,
+      password: user.password,
+    }),
+  });
+}
 
 function now() {
   return new Date().getTime();
@@ -106,5 +112,6 @@ module.exports = {
   getVars,
   startServer,
   loginUser,
+  baseLoginUser,
   setupUnitTestUsers,
 };

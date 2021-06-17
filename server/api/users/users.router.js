@@ -16,7 +16,8 @@ const {
 } = require("../../utils/router.utils");
 const {
   schema,
-  register: registerSchema,
+  registerSchema,
+  loginSchema,
 } = require("../../../src/schemas/users.schema");
 const addRoute = createAddRouter({ basePath: "/api/users", router, paths });
 
@@ -84,31 +85,13 @@ addRoute(
 
   function (req, res) {
     const body = { ...req.body };
-    const validation = schema.validate(body);
-    if (validation.error) {
-      const validationErrorMessage =
-        validation.error &&
-        validation.error.details &&
-        validation.error.details[0] &&
-        validation.error.details[0].message;
-      let errorMessage = validationErrorMessage
-        ? validationErrorMessage
-        : "Error validating user"; // generic in case drilling down doesn't work
-
-      return res
-        .status(400)
-        .json({ errorMessage, errorCode: "VALIDATION_ERROR" });
-    }
-
     bcrypt.genSalt(10, function (err, salt) {
       bcrypt.hash(body.password, salt, function (err, hash) {
         const user = new UserModel({
           username: body.username.toLowerCase(),
+          displayUsername: body.username,
           email: body.email.toLowerCase(),
           password: hash,
-          role: ["owner", "regular"].includes(body.role)
-            ? body.role
-            : "regular",
         });
         user.save((err, b) => {
           if (err) {
@@ -126,45 +109,50 @@ addRoute(
   }
 );
 
-addRoute({ path: "/login", method: "post" }, function (req, res) {
-  const body = req.body;
-  for (var key in body) {
-    if (body[key].trim) {
-      body[key] = body[key].trim();
+addRoute(
+  { path: "/login", method: "post", schema: loginSchema },
+  function (req, res) {
+    const body = req.body;
+    for (var key in body) {
+      if (body[key].trim) {
+        body[key] = body[key].trim();
+      }
     }
-  }
-  UserModel.findOne(
-    {
-      $or: [
-        { username: body.username.toLowerCase() },
-        { email: body.username.toLowerCase() },
-      ],
-    },
-    function (err, user) {
-      if (err) {
-        return res.status(401).json({ errorMessage: err.errmsg });
-      }
-      if (!user) {
-        return res.status(401).json({
-          errorMessage: `User ${body.username} not found`,
-          errorCode: "USER_NOT_FOUND",
-        });
-      }
-      bcrypt.compare(body.password, user.password).then((result) => {
-        if (!result) {
-          return res
-            .status(401)
-            .json({ errorMessage: "Login failure: bad password" });
+    UserModel.findOne(
+      {
+        $or: [
+          { username: body.username.toLowerCase() },
+          { email: body.username.toLowerCase() },
+        ],
+      },
+      function (err, user) {
+        if (err) {
+          return res.status(401).json({ errorMessage: err.errmsg });
         }
-        delete user.password;
-        const token = generateAccessToken(user.toObject());
-        return res.json({
-          successMessage: "User logged in",
-          successCode: "USER_LOGGED_IN",
-          token,
-          user,
+        if (!user) {
+          return res.status(401).json({
+            errorMessage: `User ${body.username} not found`,
+            errorCode: "USER_NOT_FOUND",
+          });
+        }
+        bcrypt.compare(body.password, user.password).then((result) => {
+          if (!result) {
+            return res.status(401).json({
+              errorMessage: "Login failure: bad password",
+              errorCode: "BAD_PASSWORD",
+            });
+          }
+
+          delete user.password;
+          const token = generateAccessToken(user.toObject());
+          return res.json({
+            successMessage: "User logged in",
+            successCode: "USER_LOGGED_IN",
+            token,
+            user,
+          });
         });
-      });
-    }
-  );
-});
+      }
+    );
+  }
+);

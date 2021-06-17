@@ -6,9 +6,9 @@ var UserSchema = new mongoose.Schema(joigoose.convert(schema));
 UserSchema.index({ username: 1 }, { unique: true });
 UserSchema.index({
   username: "text",
+  displayUsername: "text",
   email: "text",
   password: "text",
-  role: "text",
 });
 
 module.exports.UserModel = mongoose.model("User", UserSchema);
