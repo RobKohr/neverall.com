@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { FormContext } from "./Form";
-import { FormError } from "./FormError";
+import { FormFieldError } from "./";
 export default function Input({ name, type = "text", label }) {
   const { updateValue, values, validate, setFieldDirty } =
     useContext(FormContext);
@@ -26,7 +26,7 @@ export default function Input({ name, type = "text", label }) {
         onChange={onChange}
         onBlur={onBlur}
       />
-      <FormError name={name} label={label} />
+      <FormFieldError name={name} label={label} />
     </div>
   );
 }

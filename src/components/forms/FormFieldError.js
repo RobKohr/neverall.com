@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import { FormContext } from "./Form";
 
-export function FormError({ name, label }) {
+export default function FormFieldError({ name, label }) {
   const { errors, dirty } = useContext(FormContext);
 
   if (!errors || !errors[name] || !dirty[name]) return <div></div>;

@@ -4,11 +4,16 @@ import { Location } from "@reach/router";
 import { domainNameAppMapping } from "./constants";
 import { useCookies } from "react-cookie";
 import React, { lazy, Suspense } from "react";
+import { useState } from "react";
+import AlertsProvider from "components/ErrorsProvider";
 
 export const AppContext = React.createContext();
 export const CookieContext = React.createContext();
+export const MessagingContext = React.createContext();
 
 function App({ children }) {
+  const [messages, setMessages] = useState([]);
+  const setMessage = ({ code, duration = 2000, values }) => {};
   const [cookies, setCookie, removeCookie] = useCookies([
     "username",
     "role",
@@ -23,7 +28,8 @@ function App({ children }) {
   const cookieManager = {
     cookies,
     setCookie,
-    removeCookie,clearCookies
+    removeCookie,
+    clearCookies,
   };
   return (
     <div className="App">
@@ -43,7 +49,7 @@ function App({ children }) {
                 import(`./sites/${app.name}/Main`)
               );
               return (
-                <>
+                <AlertsProvider>
                   {MainOfCurrentApp && (
                     <AppContext.Provider value={app}>
                       <MainOfCurrentApp app={app} location={props.location}>
@@ -51,7 +57,7 @@ function App({ children }) {
                       </MainOfCurrentApp>
                     </AppContext.Provider>
                   )}
-                </>
+                </AlertsProvider>
               );
             }}
           </Location>

@@ -2,7 +2,7 @@ const joi = require("joi");
 
 exports.registerSchema = joi.object({
   username: joi.string().lowercase().trim().min(3).max(400).required(),
-  email: joi.string().trim(),
+  email: joi.string().trim().required(),
   password: joi.string().trim().min(8).required(),
   retypePassword: joi
     .string()

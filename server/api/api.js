@@ -10,12 +10,7 @@ routes.forEach((route) => {
     paths[key] = module.paths[key];
   }
   router.use(`/${name}`, module);
-  // console.log(JSON.stringify(paths, 0, 5));
 });
-
-//router.use("/users", require("./users/users.router"));
-// router.use("/restaurants", require("./restaurants/restaurants.router"));
-// router.use("/reviews", require("./reviews/reviews.router"));
 
 const swaggerUI = require("swagger-ui-express");
 const swaggerJson = {
@@ -25,17 +20,6 @@ const swaggerJson = {
     description: "Apis for all neverall services",
     version: "1.0.0",
   },
-  // servers: [
-  //   {
-  //     url: "http://api.example.com/v1",
-  //     description: "Optional server description, e.g. Main (production) server",
-  //   },
-  //   {
-  //     url: "http://staging-api.example.com",
-  //     description:
-  //       "Optional server description, e.g. Internal staging server for testing",
-  //   },
-  // ],
   paths,
 };
 
