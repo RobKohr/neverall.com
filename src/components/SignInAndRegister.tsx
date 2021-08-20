@@ -2,15 +2,16 @@ import React, { useContext, useState } from "react";
 import { Input, Submit, Form } from "./forms";
 import { registerSchema, loginSchema } from "../schemas/users.schema";
 import A from "./A";
-import { CookieContext } from "App";
+import { AppContext, CookieContext } from "App";
 import { navigate } from "@reach/router";
 import fetchJson from "../utils/fetchJson";
-import { ErrorContext } from "./ErrorsProvider";
+import { AlertsContext } from "./AlertsProvider";
 
 export default function SignInAndRegister({ title }: { title: string }) {
   const { addAlert, addSuccessMessage, addErrorMessage }: any =
-    useContext(ErrorContext);
-
+    useContext(AlertsContext);
+  const app = useContext(AppContext);
+  console.log({ app });
   const [values, setValues] = useState({ username: "", password: "" });
   const formType = title === "Sign In" ? "login" : "register";
   const { setCookie } = useContext(CookieContext);
@@ -31,7 +32,9 @@ export default function SignInAndRegister({ title }: { title: string }) {
           setCookie("userId", res.user._id);
         }
         addSuccessMessage("User logged in");
-        navigate(formType === "register" ? `/login` : `/`);
+        navigate(
+          formType === "register" ? `${app.baseUrl}login` : `${app.baseUrl}`
+        );
       } else {
         addAlert(res.errorMessage);
       }

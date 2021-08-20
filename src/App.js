@@ -5,7 +5,7 @@ import { domainNameAppMapping } from "./constants";
 import { useCookies } from "react-cookie";
 import React, { lazy, Suspense } from "react";
 import { useState } from "react";
-import AlertsProvider from "components/ErrorsProvider";
+import AlertsProvider from "components/AlertsProvider";
 
 export const AppContext = React.createContext();
 export const CookieContext = React.createContext();
