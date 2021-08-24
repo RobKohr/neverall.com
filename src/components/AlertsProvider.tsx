@@ -45,10 +45,18 @@ export default function AlertsProvider({ children }: Props) {
   function addSuccessMessage(message: string) {
     addAlert({ message, type: "success" });
   }
+  function addSuccessMessages(messages: string[]) {
+    messages.forEach((message) => addSuccessMessage(message));
+  }
 
   function addErrorMessage(message: string) {
     addAlert({ message, type: "error" });
   }
+
+  function addErrorMessages(messages: string[]) {
+    messages.forEach((message) => addErrorMessage(message));
+  }
+
   console.log({ alerts });
 
   return (
@@ -59,7 +67,7 @@ export default function AlertsProvider({ children }: Props) {
             {alerts
               .filter(({ type }) => type === "error")
               .map((error) => (
-                <div key={error.message} className="alert error">
+                <div key={error.id} className="alert error">
                   {error.message}
                 </div>
               ))}
@@ -68,7 +76,7 @@ export default function AlertsProvider({ children }: Props) {
             {alerts
               .filter(({ type }) => type === "success")
               .map((error) => (
-                <div key={error.message} className="alert success">
+                <div key={error.id} className="alert success">
                   {error.message}
                 </div>
               ))}
@@ -76,7 +84,13 @@ export default function AlertsProvider({ children }: Props) {
         </div>
       )}
       <AlertsContext.Provider
-        value={{ addAlert, addSuccessMessage, addErrorMessage }}
+        value={{
+          addAlert,
+          addSuccessMessage,
+          addSuccessMessages,
+          addErrorMessage,
+          addErrorMessages,
+        }}
       >
         {children}
       </AlertsContext.Provider>

@@ -8,52 +8,59 @@ import fetchJson from "../utils/fetchJson";
 import { AlertsContext } from "./AlertsProvider";
 
 export default function SignInAndRegister({ title }: { title: string }) {
-  const { addAlert, addSuccessMessage, addErrorMessage }: any =
+  const { addSuccessMessage, addErrorMessage, addErrorMessages }: any =
     useContext(AlertsContext);
   const app = useContext(AppContext);
-  console.log({ app });
+
   const [values, setValues] = useState({ username: "", password: "" });
   const formType = title === "Sign In" ? "login" : "register";
   const { setCookie } = useContext(CookieContext);
-  console.log({ setCookie });
-
+  const schema = formType === "login" ? loginSchema : registerSchema;
   const onSubmit = ({ values }: any) => {
-    const onSuccessfulSubmission = (res: {
-      successMessage: any;
-      token: any;
-      user: { username: any; role: any; _id: any };
-      errorMessage: any;
-    }) => {
-      if (res.successMessage) {
-        if (formType === "login") {
-          setCookie("token", res.token);
-          setCookie("username", res.user.username);
-          setCookie("role", res.user.role);
-          setCookie("userId", res.user._id);
-        }
-        addSuccessMessage("User logged in");
-        navigate(
-          formType === "register" ? `${app.baseUrl}login` : `${app.baseUrl}`
-        );
-      } else {
-        addAlert(res.errorMessage);
-      }
-    };
     fetchJson(`/api/users/${formType}`, {
       method: "POST",
       bodyObj: values,
       headers: { "Content-Type": "application/json" },
     })
-      .then(onSuccessfulSubmission)
+      .then(
+        (res: {
+          successMessage: any;
+          token: any;
+          user: { username: any; role: any; _id: any };
+          errorMessages: string[];
+        }) => {
+          if (res?.successMessage) {
+            if (formType === "login") {
+              setCookie("token", res.token);
+              setCookie("username", res.user.username);
+              setCookie("role", res.user.role);
+              setCookie("userId", res.user._id);
+            }
+            addSuccessMessage("User logged in");
+            navigate(
+              formType === "register" ? `${app.baseUrl}login` : `${app.baseUrl}`
+            );
+          } else {
+            addErrorMessages(res.errorMessages);
+          }
+        }
+      )
       .catch((err) => {
-        console.error(err);
+        const errorText = String(err);
+        switch (errorText) {
+          case "TypeError: (destructured parameter) is undefined":
+            addErrorMessage("Failed to get a response from API");
+            break;
+          default:
+            addErrorMessage("Unhandled Error: " + errorText);
+        }
       });
   };
   return (
     <Form
       values={values}
       setValues={setValues}
-      schema={formType === "login" ? loginSchema : registerSchema}
+      schema={schema}
       onSubmit={onSubmit}
       remap={[
         {

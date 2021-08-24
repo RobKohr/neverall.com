@@ -16,6 +16,7 @@
     "e2e": "./node_modules/.bin/cypress open"
   },
   "dependencies": {
+    "14": "^3.1.6",
     "@reach/router": "^1.3.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
