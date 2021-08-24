@@ -62,6 +62,12 @@ export default function SignInAndRegister({ title }: { title: string }) {
         },
       ]}
     >
+      <div onClick={() => addErrorMessage("some test error message")}>
+        error
+      </div>
+      <div onClick={() => addSuccessMessage("some test notice message")}>
+        notice
+      </div>
       <div className="page page-sign-in">
         <div>
           <h2>{title}</h2>

@@ -1,5 +1,4 @@
-import { string } from "joi";
-import { useState, createContext } from "react";
+import { useState, createContext, useReducer } from "react";
 import { v4 as uuid } from "uuid";
 import "./AlertsProvider.scss";
 export const AlertsContext = createContext({});
@@ -16,27 +15,19 @@ interface Alert {
   type: "error" | "success";
 }
 
+function reducer(alerts: Alert[], action: any) {
+  switch (action.type) {
+    case "add":
+      return [...alerts, action.alert];
+    case "remove":
+      return [...alerts].filter(({ id }) => id !== action.alert.id);
+    default:
+      throw new Error();
+  }
+}
+
 export default function AlertsProvider({ children }: Props) {
-  const [alerts, setAlerts] = useState<Alert[]>([
-    {
-      type: "success",
-      message: "test success message",
-      timeout: 3000,
-      closeable: true,
-    },
-    {
-      type: "error",
-      message: "test error message",
-      timeout: 3000,
-      closeable: true,
-    },
-    {
-      type: "error",
-      message: "test error 2 message",
-      timeout: 3000,
-      closeable: true,
-    },
-  ]);
+  const [alerts, alertsDispatcher] = useReducer(reducer, []);
 
   function addAlert({
     message,
@@ -45,9 +36,9 @@ export default function AlertsProvider({ children }: Props) {
     closeable = true,
   }: Alert) {
     const alert = { message, timeout, closeable, id: uuid(), type };
-    setAlerts([...alerts, alert]);
+    alertsDispatcher({ type: "add", alert });
     setTimeout(() => {
-      setAlerts(alerts.filter(({ id }) => id !== alert.id));
+      alertsDispatcher({ type: "remove", alert });
     }, alert.timeout);
   }
 
