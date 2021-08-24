@@ -1,0 +1,18 @@
+.alert-groups {
+  position: fixed;
+  color: white;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  .alert {
+    padding: 0.5em;
+  }
+  .success {
+    background: blue;
+  }
+  .error {
+    background: red;
+    color: white;
+  }
+}

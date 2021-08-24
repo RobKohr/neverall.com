@@ -88,9 +88,9 @@ addRoute(
     bcrypt.genSalt(10, function (err, salt) {
       bcrypt.hash(body.password, salt, function (err, hash) {
         const user = new UserModel({
-          username: body.username.toLowerCase(),
+          username: body.username?.toLowerCase(),
           displayUsername: body.username,
-          email: body.email.toLowerCase(),
+          email: body.email?.toLowerCase(),
           password: hash,
         });
         user.save((err, b) => {
@@ -99,8 +99,8 @@ addRoute(
           } else {
             return res.json({
               successMessage: `User ${user.username} created, please log in.`,
-              item: user,
               successCode: "USER_REGISTERED",
+              values: { username: user.username },
             });
           }
         });
@@ -126,6 +126,7 @@ addRoute(
         ],
       },
       function (err, user) {
+        console.log({ err, user });
         if (err) {
           return res.status(401).json({ errorMessage: err.errmsg });
         }

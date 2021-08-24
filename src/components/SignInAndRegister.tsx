@@ -1,24 +1,29 @@
 import React, { useContext, useState } from "react";
-import Input from "../components/Input";
-import Submit from "../components/Submit";
-import Form from "./Form";
-import { register } from "../schemas/users.schema";
+import { Input, Submit, Form } from "./forms";
+import { registerSchema, loginSchema } from "../schemas/users.schema";
 import A from "./A";
-import { CookieContext } from "App";
+import { AppContext, CookieContext } from "App";
 import { navigate } from "@reach/router";
 import fetchJson from "../utils/fetchJson";
+import { AlertsContext } from "./AlertsProvider";
 
-export default function SignInAndRegister({ title }) {
+export default function SignInAndRegister({ title }: { title: string }) {
+  const { addAlert, addSuccessMessage, addErrorMessage }: any =
+    useContext(AlertsContext);
+  const app = useContext(AppContext);
+  console.log({ app });
   const [values, setValues] = useState({ username: "", password: "" });
-  const formType = title === "Login" ? "login" : "register";
+  const formType = title === "Sign In" ? "login" : "register";
   const { setCookie } = useContext(CookieContext);
   console.log({ setCookie });
 
-  function setErrorMessage(message) {
-    console.error(message);
-  }
-  const onSubmit = ({ values }) => {
-    const onSuccessfulSubmission = (res) => {
+  const onSubmit = ({ values }: any) => {
+    const onSuccessfulSubmission = (res: {
+      successMessage: any;
+      token: any;
+      user: { username: any; role: any; _id: any };
+      errorMessage: any;
+    }) => {
       if (res.successMessage) {
         if (formType === "login") {
           setCookie("token", res.token);
@@ -26,10 +31,12 @@ export default function SignInAndRegister({ title }) {
           setCookie("role", res.user.role);
           setCookie("userId", res.user._id);
         }
-        setErrorMessage("User logged in");
-        navigate(formType === "register" ? `/login` : `/`);
+        addSuccessMessage("User logged in");
+        navigate(
+          formType === "register" ? `${app.baseUrl}login` : `${app.baseUrl}`
+        );
       } else {
-        setErrorMessage(res.errorMessage);
+        addAlert(res.errorMessage);
       }
     };
     fetchJson(`/api/users/${formType}`, {
@@ -46,7 +53,7 @@ export default function SignInAndRegister({ title }) {
     <Form
       values={values}
       setValues={setValues}
-      schema={register}
+      schema={formType === "login" ? loginSchema : registerSchema}
       onSubmit={onSubmit}
       remap={[
         {
