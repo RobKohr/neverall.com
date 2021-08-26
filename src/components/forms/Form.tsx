@@ -1,6 +1,20 @@
+import { any, string } from "joi";
 import React, { useState } from "react";
 
 export const FormContext = React.createContext();
+
+interface Props {
+  children: any;
+  values: string[];
+  setValues: (values: string[]) => void;
+  onSubmit: (values: string[]) => void;
+  schema: any;
+  remap: any;
+}
+
+interface DictList {
+  [name: string]: string;
+}
 
 export default function Form({
   children,
@@ -9,11 +23,19 @@ export default function Form({
   onSubmit,
   schema,
   remap,
-}) {
+}: Props) {
   const [errors, setErrors] = useState(null);
   const [labels, setLabels] = useState({});
   const [dirty, setDirty] = useState({});
-  const updateValue = ({ name, value, label }) => {
+  const updateValue = ({
+    name,
+    value,
+    label,
+  }: {
+    name: string;
+    value: string;
+    label: string;
+  }) => {
     const updatedValues = { ...values, [name]: value };
     setValues(updatedValues);
     if (!labels[name] && label) {
@@ -33,15 +55,24 @@ export default function Form({
       abortEarly: false,
     });
     const errors = validation?.error?.details;
-    setErrors(errors ? remapErrorMessages({ errors, remap, labels }) : null);
+    const errorsToSet = errors
+      ? remapErrorMessages({ errors, remap, labels })
+      : null;
+    setErrors(errorsToSet);
+    return errorsToSet;
   };
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit({ values });
-        return false;
+        const errors = validate(values);
+        if (errors?.length) {
+          setDirty({ ...dirty, ...errors });
+        } else {
+          onSubmit({ values });
+          return false;
+        }
       }}
     >
       <FormContext.Provider
