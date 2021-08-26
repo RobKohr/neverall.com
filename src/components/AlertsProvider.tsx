@@ -17,26 +17,7 @@ interface Alert {
 }
 
 export default function AlertsProvider({ children }: Props) {
-  const [alerts, setAlerts] = useState<Alert[]>([
-    {
-      type: "success",
-      message: "test success message",
-      timeout: 3000,
-      closeable: true,
-    },
-    {
-      type: "error",
-      message: "test error message",
-      timeout: 3000,
-      closeable: true,
-    },
-    {
-      type: "error",
-      message: "test error 2 message",
-      timeout: 3000,
-      closeable: true,
-    },
-  ]);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
 
   function addAlert({
     message,
