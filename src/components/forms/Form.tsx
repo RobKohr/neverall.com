@@ -1,19 +1,37 @@
-import { any, string } from "joi";
+import Joi, { any, string } from "joi";
 import React, { useState } from "react";
 
-export const FormContext = React.createContext();
+export const FormContext = React.createContext({
+  values,
+  setValues,
+  updateValue,
+  validate,
+  errors,
+  dirty,
+  setFieldDirty,
+});
 
-interface Props {
-  children: any;
-  values: string[];
-  setValues: (values: string[]) => void;
-  onSubmit: (values: string[]) => void;
-  schema: any;
-  remap: any;
+export interface Values {
+  [name: string]: string;
 }
 
-interface DictList {
+export interface Errors {
   [name: string]: string;
+}
+
+export interface Labels {
+  [name: string]: string;
+}
+export interface Dirty {
+  [name: string]: boolean | string;
+}
+interface Props {
+  children: any;
+  values: Values;
+  setValues: (values: Values) => void;
+  onSubmit: (values: Values) => void;
+  schema: Joi.ObjectSchema;
+  remap: any;
 }
 
 export default function Form({
@@ -24,9 +42,9 @@ export default function Form({
   schema,
   remap,
 }: Props) {
-  const [errors, setErrors] = useState(null);
-  const [labels, setLabels] = useState({});
-  const [dirty, setDirty] = useState({});
+  const [errors, setErrors] = useState<Errors | null>(null);
+  const [labels, setLabels] = useState<Labels>({});
+  const [dirty, setDirty] = useState<Dirty>({});
   const updateValue = ({
     name,
     value,
@@ -46,11 +64,11 @@ export default function Form({
     }
     validate({ ...values, [name]: value });
   };
-  function setFieldDirty(name) {
+  function setFieldDirty(name: string) {
     setDirty({ ...dirty, [name]: true });
   }
 
-  const validate = (updatedValues) => {
+  const validate = (updatedValues: Values) => {
     const validation = schema.validate(updatedValues || values, {
       abortEarly: false,
     });
@@ -70,7 +88,7 @@ export default function Form({
         if (errors?.length) {
           setDirty({ ...dirty, ...errors });
         } else {
-          onSubmit({ values });
+          onSubmit(values);
           return false;
         }
       }}
@@ -91,35 +109,51 @@ export default function Form({
     </form>
   );
 }
-const defaultRemap = [
+
+interface Remap {
+  original: string;
+  replacement: string;
+  name?: string;
+}
+
+const defaultRemap: Remap[] = [
   { original: "is not allowed to be empty", replacement: "is missing" },
 ];
-
-export function remapErrorMessages({ errors, remap, labels }) {
+interface RemapErrorMessages {
+  errors: Joi.ValidationErrorItem[] | undefined;
+  remap: Remap[];
+  labels: Labels;
+}
+export function remapErrorMessages({
+  errors,
+  remap,
+  labels,
+}: RemapErrorMessages) {
   const combinedRemap = (remap || []).concat(defaultRemap);
-  const out = {};
-
+  const out: Errors = {};
+  if (!errors) return {};
   errors.forEach(function processError({ context, message }) {
     const name = context?.key;
     if (!name) return;
-
-    out[name] = { message };
     const container = out[name];
-    if (labels[name]) {
-      container.message = container.message.replace(
-        `"${name}"`,
-        `"${labels[name]}"`
-      );
-    }
-    console.log(name);
-    combinedRemap.forEach(({ original, replacement, name: replaceField }) => {
-      if (original) {
-        container.message = container.message.replace(original, replacement);
-      }
-      if (replaceField === name) {
-        container.message = replacement;
-      }
-    });
+    console.warn("remapErrorMessages resolve", { context, message, container });
+
+    // out[name] = message;
+    //
+    // if (labels[name]) {
+    //   container.message = container.message.replace(
+    //     `"${name}"`,
+    //     `"${labels[name]}"`
+    //   );
+    // }
+    // combinedRemap.forEach(({ original, replacement, name: replaceField }) => {
+    //   if (original) {
+    //     container.message = container.message.replace(original, replacement);
+    //   }
+    //   if (replaceField === name) {
+    //     container.message = replacement;
+    //   }
+    // });
   });
 
   return out;

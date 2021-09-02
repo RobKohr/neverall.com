@@ -6,6 +6,7 @@ import { AppContext, CookieContext } from "App";
 import { navigate } from "@reach/router";
 import fetchJson from "../utils/fetchJson";
 import { AlertsContext } from "./AlertsProvider";
+import { Values } from "./forms/Form";
 
 export default function SignInAndRegister({ title }: { title: string }) {
   const { addSuccessMessage, addErrorMessage, addErrorMessages }: any =
@@ -16,7 +17,7 @@ export default function SignInAndRegister({ title }: { title: string }) {
   const formType = title === "Sign In" ? "login" : "register";
   const { setCookie } = useContext(CookieContext);
   const schema = formType === "login" ? loginSchema : registerSchema;
-  const onSubmit = ({ values }: any) => {
+  const onSubmit = (values: Values) => {
     fetchJson(`/api/users/${formType}`, {
       method: "POST",
       bodyObj: values,
