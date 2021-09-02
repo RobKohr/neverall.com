@@ -1,5 +1,5 @@
 import Joi from "joi";
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 
 interface UpdateValue {
   name: string;
@@ -43,86 +43,9 @@ export interface Labels {
 export interface Dirty {
   [name: string]: boolean | string;
 }
-interface Props {
-  children: any;
-  values: Values;
-  setValues: (values: Values) => void;
-  onSubmit: (values: Values) => void;
-  schema: Joi.ObjectSchema;
-  remap: any;
-}
-
-export default function Form({
-  children,
-  values,
-  setValues,
-  onSubmit,
-  schema,
-  remap,
-}: Props) {
-  const [errors, setErrors] = useState<Errors | null>(null);
-  const [labels, setLabels] = useState<Labels>({});
-  const [dirty, setDirty] = useState<Dirty>({});
-
-  const updateValue = ({ name, value, label }: UpdateValue) => {
-    const updatedValues = { ...values, [name]: value };
-    setValues(updatedValues);
-    if (!labels[name] && label) {
-      setLabels({ ...labels, [name]: label });
-    }
-    if (value && !dirty[name]) {
-      setFieldDirty(name);
-    }
-    validate({ ...values, [name]: value });
-  };
-  function setFieldDirty(name: string) {
-    setDirty({ ...dirty, [name]: true });
-  }
-
-  const validate = (updatedValues: Values) => {
-    const validation = schema.validate(updatedValues || values, {
-      abortEarly: false,
-    });
-    const errors = validation?.error?.details;
-    const errorsToSet = errors
-      ? remapErrorMessages({ errors, remap, labels })
-      : null;
-    setErrors(errorsToSet);
-    return errorsToSet;
-  };
-
-  const formContextValue: FormContextValue = {
-    values,
-    setValues,
-    updateValue,
-    validate,
-    errors,
-    dirty,
-    setFieldDirty,
-  };
-
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        const errors = validate(values);
-        if (errors?.length) {
-          setDirty({ ...dirty, ...errors });
-        } else {
-          onSubmit(values);
-          return false;
-        }
-      }}
-    >
-      <FormContext.Provider value={formContextValue}>
-        {children}
-      </FormContext.Provider>
-    </form>
-  );
-}
 
 interface Remap {
-  original: string;
+  original?: string;
   replacement: string;
   name?: string;
 }
@@ -130,11 +53,7 @@ interface Remap {
 const defaultRemap: Remap[] = [
   { original: "is not allowed to be empty", replacement: "is missing" },
 ];
-interface RemapErrorMessages {
-  errors: Joi.ValidationErrorItem[] | undefined;
-  remap: Remap[];
-  labels: Labels;
-}
+
 export function remapErrorMessages({
   errors,
   remap,
@@ -152,6 +71,7 @@ export function remapErrorMessages({
       message,
       container,
       combinedRemap,
+      labels,
     });
 
     // out[name] = message;
@@ -173,4 +93,86 @@ export function remapErrorMessages({
   });
 
   return out;
+}
+
+interface Props {
+  children: ReactNode;
+  values: Values;
+  setValues: (values: Values) => void;
+  onSubmit: (values: Values) => void;
+  schema: Joi.ObjectSchema;
+  remap: Remap;
+}
+
+export default function Form({
+  children,
+  values,
+  setValues,
+  onSubmit,
+  schema,
+  remap,
+}: Props) {
+  const [errors, setErrors] = useState<Errors | null>(null);
+  const [labels, setLabels] = useState<Labels>({});
+  const [dirty, setDirty] = useState<Dirty>({});
+  function validate(updatedValues: Values) {
+    const validation = schema.validate(updatedValues || values, {
+      abortEarly: false,
+    });
+    const errorDetails = validation?.error?.details;
+    const errorsToSet = errorDetails
+      ? remapErrorMessages({ errors: errorDetails, remap, labels })
+      : null;
+    setErrors(errorsToSet);
+    return errorsToSet;
+  }
+  function setFieldDirty(name: string) {
+    setDirty({ ...dirty, [name]: true });
+  }
+  const updateValue = ({ name, value, label }: UpdateValue) => {
+    const updatedValues = { ...values, [name]: value };
+    setValues(updatedValues);
+    if (!labels[name] && label) {
+      setLabels({ ...labels, [name]: label });
+    }
+    if (value && !dirty[name]) {
+      setFieldDirty(name);
+    }
+    validate({ ...values, [name]: value });
+  };
+
+  const formContextValue: FormContextValue = {
+    values,
+    setValues,
+    updateValue,
+    validate,
+    errors,
+    dirty,
+    setFieldDirty,
+  };
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        const newValidationErrors = validate(values);
+        if (newValidationErrors?.length) {
+          setDirty({ ...dirty, ...newValidationErrors });
+        } else {
+          onSubmit(values);
+          return false;
+        }
+      }}
+    >
+      <FormContext.Provider value={formContextValue}>
+        {children}
+      </FormContext.Provider>
+    </form>
+  );
+}
+
+interface RemapErrorMessages {
+  errors: Joi.ValidationErrorItem[] | undefined;
+  remap: Remap[];
+  labels: Labels;
 }

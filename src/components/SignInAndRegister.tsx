@@ -1,15 +1,15 @@
 import React, { useContext, useState } from "react";
+import { AppContext, CookieContext } from "App";
+import { navigate } from "@reach/router";
 import { Input, Submit, Form } from "./forms";
 import { registerSchema, loginSchema } from "../schemas/users.schema";
 import A from "./A";
-import { AppContext, CookieContext } from "App";
-import { navigate } from "@reach/router";
 import fetchJson from "../utils/fetchJson";
 import { AlertsContext } from "./AlertsProvider";
 import { Values } from "./forms/Form";
 
 export default function SignInAndRegister({ title }: { title: string }) {
-  const { addSuccessMessage, addErrorMessage, addErrorMessages }: any =
+  const { addSuccessMessage, addErrorMessage, addErrorMessages } =
     useContext(AlertsContext);
   const app = useContext(AppContext);
 
@@ -17,17 +17,17 @@ export default function SignInAndRegister({ title }: { title: string }) {
   const formType = title === "Sign In" ? "login" : "register";
   const { setCookie } = useContext(CookieContext);
   const schema = formType === "login" ? loginSchema : registerSchema;
-  const onSubmit = (values: Values) => {
+  const onSubmit = (valuesToSubmit: Values) => {
     fetchJson(`/api/users/${formType}`, {
       method: "POST",
-      bodyObj: values,
+      bodyObj: valuesToSubmit,
       headers: { "Content-Type": "application/json" },
     })
       .then(
         (res: {
-          successMessage: any;
-          token: any;
-          user: { username: any; role: any; _id: any };
+          successMessage: string;
+          token: string;
+          user: { username: string; role: string; _id: string };
           errorMessages: string[];
         }) => {
           if (res?.successMessage) {
@@ -53,7 +53,7 @@ export default function SignInAndRegister({ title }: { title: string }) {
             addErrorMessage("Failed to get a response from API");
             break;
           default:
-            addErrorMessage("Unhandled Error: " + errorText);
+            addErrorMessage(`Unhandled Error: ${errorText}`);
         }
       });
   };
@@ -70,12 +70,6 @@ export default function SignInAndRegister({ title }: { title: string }) {
         },
       ]}
     >
-      <div onClick={() => addErrorMessage("some test error message")}>
-        error
-      </div>
-      <div onClick={() => addSuccessMessage("some test notice message")}>
-        notice
-      </div>
       <div className="page page-sign-in">
         <div>
           <h2>{title}</h2>

@@ -1,10 +1,17 @@
-import { createContext, useReducer } from "react";
+import React, { createContext, ReactNode, useReducer } from "react";
 import { v4 as uuid } from "uuid";
 import "./AlertsProvider.scss";
-export const AlertsContext = createContext({});
+
+export const AlertsContext = createContext({
+  addAlert: () => {},
+  addSuccessMessage: () => {},
+  addSuccessMessages: () => {},
+  addErrorMessage: () => {},
+  addErrorMessages: () => {},
+});
 
 interface Props {
-  children: any;
+  children: ReactNode;
 }
 
 interface Alert {
@@ -15,7 +22,7 @@ interface Alert {
   type: "error" | "success";
 }
 
-function reducer(alerts: Alert[], action: any) {
+function reducer(alerts: Alert[], action: { type: string; alert: Alert }) {
   switch (action.type) {
     case "add":
       return [...alerts, action.alert];

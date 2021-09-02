@@ -1,6 +1,7 @@
 export default function fetchJson(url, options = {}) {
-  if (options.bodyObj) options.body = JSON.stringify(options.bodyObj);
-  return fetch(url, options)
+  const fetchOptions = { ...options };
+  if (options.bodyObj) fetchOptions.body = JSON.stringify(options.bodyObj);
+  return fetch(url, fetchOptions)
     .then((res) => {
       return res.json();
     })
