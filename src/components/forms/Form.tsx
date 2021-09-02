@@ -1,14 +1,32 @@
-import Joi, { any, string } from "joi";
+import Joi from "joi";
 import React, { useState } from "react";
 
-export const FormContext = React.createContext({
-  values,
-  setValues,
-  updateValue,
-  validate,
-  errors,
-  dirty,
-  setFieldDirty,
+interface UpdateValue {
+  name: string;
+  value: string;
+  label: string;
+}
+
+interface FormContextValue {
+  values: Values;
+  setValues: (values: Values) => void;
+  updateValue: (updatedValue: UpdateValue) => void;
+  validate: (updatedValues: Values) => Errors | null;
+  errors: Errors | null;
+  dirty: Dirty;
+  setFieldDirty: (fieldName: string) => void;
+}
+
+export const FormContext = React.createContext<FormContextValue>({
+  values: {},
+  setValues: () => {},
+  updateValue: () => {},
+  validate: () => {
+    return null;
+  },
+  errors: {},
+  dirty: {},
+  setFieldDirty: () => {},
 });
 
 export interface Values {
@@ -45,15 +63,8 @@ export default function Form({
   const [errors, setErrors] = useState<Errors | null>(null);
   const [labels, setLabels] = useState<Labels>({});
   const [dirty, setDirty] = useState<Dirty>({});
-  const updateValue = ({
-    name,
-    value,
-    label,
-  }: {
-    name: string;
-    value: string;
-    label: string;
-  }) => {
+
+  const updateValue = ({ name, value, label }: UpdateValue) => {
     const updatedValues = { ...values, [name]: value };
     setValues(updatedValues);
     if (!labels[name] && label) {
@@ -80,6 +91,16 @@ export default function Form({
     return errorsToSet;
   };
 
+  const formContextValue: FormContextValue = {
+    values,
+    setValues,
+    updateValue,
+    validate,
+    errors,
+    dirty,
+    setFieldDirty,
+  };
+
   return (
     <form
       onSubmit={(e) => {
@@ -93,17 +114,7 @@ export default function Form({
         }
       }}
     >
-      <FormContext.Provider
-        value={{
-          values,
-          setValues,
-          updateValue,
-          validate,
-          errors,
-          dirty,
-          setFieldDirty,
-        }}
-      >
+      <FormContext.Provider value={formContextValue}>
         {children}
       </FormContext.Provider>
     </form>
@@ -136,7 +147,12 @@ export function remapErrorMessages({
     const name = context?.key;
     if (!name) return;
     const container = out[name];
-    console.warn("remapErrorMessages resolve", { context, message, container });
+    console.warn("remapErrorMessages resolve", {
+      context,
+      message,
+      container,
+      combinedRemap,
+    });
 
     // out[name] = message;
     //

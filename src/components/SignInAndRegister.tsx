@@ -13,7 +13,7 @@ export default function SignInAndRegister({ title }: { title: string }) {
     useContext(AlertsContext);
   const app = useContext(AppContext);
 
-  const [values, setValues] = useState({ username: "", password: "" });
+  const [values, setValues] = useState<Values>({ username: "", password: "" });
   const formType = title === "Sign In" ? "login" : "register";
   const { setCookie } = useContext(CookieContext);
   const schema = formType === "login" ? loginSchema : registerSchema;

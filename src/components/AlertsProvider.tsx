@@ -1,4 +1,4 @@
-import { useState, createContext, useReducer } from "react";
+import { createContext, useReducer } from "react";
 import { v4 as uuid } from "uuid";
 import "./AlertsProvider.scss";
 export const AlertsContext = createContext({});

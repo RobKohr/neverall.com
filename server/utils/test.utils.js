@@ -3,7 +3,6 @@ require("dotenv").config();
 const fetch = require("node-fetch");
 const assert = require("assert");
 const mongoose = require("mongoose");
-const { get } = require("lodash");
 const { UserModel } = require("../api/users/User.model");
 mongoose.connect("mongodb://localhost/" + process.env.dbName, {
   useNewUrlParser: true,
@@ -83,7 +82,7 @@ function loginUser({ user }) {
         return res.json();
       })
       .then((res) => {
-        headers = {
+        const headers = {
           "Content-Type": "application/json;charset=utf-8",
           Authorization: `Bearer ${res.token}`,
         };

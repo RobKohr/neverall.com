@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:4001",
+  
   "scripts": {
     "start": "BROWSER=firefox react-scripts start",
     "build": "react-scripts build",
@@ -13,7 +14,8 @@
     "react-test": "react-scripts test",
     "test": "npm run server-test",
     "eject": "react-scripts eject",
-    "e2e": "./node_modules/.bin/cypress open"
+    "e2e": "./node_modules/.bin/cypress open",
+    "lint": "eslint . --fix"
   },
   "dependencies": {
     "14": "^3.1.6",

@@ -4,7 +4,6 @@ import { Location } from "@reach/router";
 import { domainNameAppMapping } from "./constants";
 import { useCookies } from "react-cookie";
 import React, { lazy, Suspense } from "react";
-import { useState } from "react";
 import AlertsProvider from "components/AlertsProvider";
 
 export const AppContext = React.createContext();
@@ -12,8 +11,6 @@ export const CookieContext = React.createContext();
 export const MessagingContext = React.createContext();
 
 function App({ children }) {
-  const [messages, setMessages] = useState([]);
-  const setMessage = ({ code, duration = 2000, values }) => {};
   const [cookies, setCookie, removeCookie] = useCookies([
     "username",
     "role",
