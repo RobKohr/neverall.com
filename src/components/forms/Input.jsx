@@ -13,7 +13,7 @@ export default function Input({ name, type = "text", label }) {
     values[name] = "";
   }
 
-  function onBlur(e) {
+  function onBlur() {
     validate();
     setFieldDirty(name);
   }

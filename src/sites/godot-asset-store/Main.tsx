@@ -6,8 +6,12 @@ import Register from "pages/Register";
 import A from "components/A";
 import Filters from "./components/Filters";
 import logo from "./logo.png";
+import { any } from "joi";
 
-export default function Main({ app }) {
+interface Props {
+  app: any;
+}
+export default function Main<Props>() {
   return (
     <div className="asset-store">
       <div id="navbar">
