@@ -8,10 +8,16 @@ import AlertsProvider from "components/AlertsProvider";
 import { domainNameAppMapping } from "./constants";
 import { string } from "joi";
 
-export interface App {
-  [configName: string]: string;
+export interface SettingsForApp {
+  name: string;
+  baseUrl?: string;
 }
-export interface Cookies {
+
+export interface SettingsForApps {
+  [appName: string]: SettingsForApp;
+}
+
+export interface CookieValues {
   [name: string]: string;
 }
 export interface CookieManager {
@@ -26,7 +32,7 @@ export interface CookieManager {
   clearCookies?: () => void;
 }
 
-export const AppContext = React.createContext<App>({});
+export const AppContext = React.createContext<SettingsForApp>({ name: "" });
 export const CookieContext = React.createContext<CookieManager>({});
 export const MessagingContext = React.createContext({});
 
@@ -55,21 +61,24 @@ function App({ children }: { children: ReactNode }) {
           <Location>
             {(props) => {
               const appFromPathname = props.location.pathname.split("/")[1];
-              const app = {
+              const settingsForApps = {
                 ...(domainNameAppMapping[props.location.hostname] ||
                   domainNameAppMapping[appFromPathname] ||
                   domainNameAppMapping.default),
               };
 
-              app.baseUrl = `/${app.name}/`;
+              settingsForApps.baseUrl = `/${settingsForApps.name}/`;
               const MainOfCurrentApp = lazy(
-                () => import(`./sites/${app.name}/Main`)
+                () => import(`./sites/${settingsForApps.name}/Main`)
               );
               return (
                 <AlertsProvider>
                   {MainOfCurrentApp && (
-                    <AppContext.Provider value={app}>
-                      <MainOfCurrentApp app={app} location={props.location}>
+                    <AppContext.Provider value={settingsForApps}>
+                      <MainOfCurrentApp
+                        app={settingsForApps}
+                        location={props.location}
+                      >
                         {children}
                       </MainOfCurrentApp>
                     </AppContext.Provider>
