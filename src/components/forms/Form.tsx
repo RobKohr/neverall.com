@@ -101,7 +101,7 @@ interface Props {
   setValues: (values: Values) => void;
   onSubmit: (values: Values) => void;
   schema: Joi.ObjectSchema;
-  remap: Remap;
+  remap: Remap[];
 }
 
 export default function Form({

@@ -1,7 +1,7 @@
 import React from "react";
 import { RouteComponentProps } from "@reach/router";
 
-export default function Lipsum<RouteComponentProps>() {
+export default function Lipsum(_props: RouteComponentProps) {
   return (
     <>
       <p>

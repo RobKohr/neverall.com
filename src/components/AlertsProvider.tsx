@@ -2,24 +2,24 @@ import React, { createContext, ReactNode, useReducer } from "react";
 import { v4 as uuid } from "uuid";
 import "./AlertsProvider.scss";
 
-export const AlertsContext = createContext({
-  addAlert: () => {},
-  addSuccessMessage: () => {},
-  addSuccessMessages: () => {},
-  addErrorMessage: () => {},
-  addErrorMessages: () => {},
-});
-
-interface Props {
-  children: ReactNode;
-}
-
 interface Alert {
   message: string;
   timeout?: number;
   closeable?: boolean;
   id?: string;
   type: "error" | "success";
+}
+
+export const AlertsContext = createContext({
+  addAlert: (alert: Alert) => {},
+  addSuccessMessage: (message: string) => {},
+  addSuccessMessages: (messages: string[]) => {},
+  addErrorMessage: (message: string) => {},
+  addErrorMessages: (messages: string[]) => {},
+});
+
+interface Props {
+  children: ReactNode;
 }
 
 function reducer(alerts: Alert[], action: { type: string; alert: Alert }) {

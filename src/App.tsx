@@ -1,12 +1,11 @@
 import "./App.scss";
 import "./fontello/css/fontello.css";
 import { Location } from "@reach/router";
-import { Cookie, CookieSetOptions } from "universal-cookie";
-import { Cookies, useCookies } from "react-cookie";
+import { CookieSetOptions } from "universal-cookie";
+import { useCookies } from "react-cookie";
 import React, { lazy, ReactNode, Suspense } from "react";
 import AlertsProvider from "components/AlertsProvider";
 import { domainNameAppMapping } from "./constants";
-import { string } from "joi";
 
 export interface SettingsForApp {
   name: string;
