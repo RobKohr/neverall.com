@@ -10,12 +10,17 @@ interface Alert {
   type: "error" | "success";
 }
 
+interface ErrorResponse {
+  errorMessage?: string;
+  errorMessages?: string[];
+}
 export const AlertsContext = createContext({
   addAlert: (alert: Alert) => {},
   addSuccessMessage: (message: string) => {},
   addSuccessMessages: (messages: string[]) => {},
   addErrorMessage: (message: string) => {},
   addErrorMessages: (messages: string[]) => {},
+  handleErrorResponse: (res: ErrorResponse) => {},
 });
 
 interface Props {
@@ -64,7 +69,14 @@ export default function AlertsProvider({ children }: Props) {
     messages.forEach((message) => addErrorMessage(message));
   }
 
-  console.log({ alerts });
+  function handleErrorResponse(res: ErrorResponse) {
+    if (res.errorMessage) {
+      addErrorMessage(res.errorMessage);
+    }
+    if (res.errorMessages) {
+      addErrorMessages(res.errorMessages);
+    }
+  }
 
   return (
     <>
@@ -97,6 +109,7 @@ export default function AlertsProvider({ children }: Props) {
           addSuccessMessages,
           addErrorMessage,
           addErrorMessages,
+          handleErrorResponse,
         }}
       >
         {children}

@@ -9,8 +9,12 @@ import { AlertsContext } from "./AlertsProvider";
 import { Values } from "./forms/Form";
 
 export default function SignInAndRegister({ title }: { title: string }) {
-  const { addSuccessMessage, addErrorMessage, addErrorMessages } =
-    useContext(AlertsContext);
+  const {
+    addSuccessMessage,
+    addErrorMessage,
+    addErrorMessages,
+    handleErrorResponse,
+  } = useContext(AlertsContext);
   const app = useContext(AppContext);
 
   const [values, setValues] = useState<Values>({ username: "", password: "" });
@@ -42,7 +46,7 @@ export default function SignInAndRegister({ title }: { title: string }) {
               formType === "register" ? `${app.baseUrl}login` : `${app.baseUrl}`
             );
           } else {
-            addErrorMessages(res.errorMessages);
+            handleErrorResponse(res);
           }
         }
       )
