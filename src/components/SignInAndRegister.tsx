@@ -38,7 +38,6 @@ export default function SignInAndRegister({ title }: { title: string }) {
             if (formType === "login" && setCookie) {
               setCookie("token", res.token);
               setCookie("username", res.user.username);
-              setCookie("role", res.user.role);
               setCookie("userId", res.user._id);
             }
             addSuccessMessage("User logged in");

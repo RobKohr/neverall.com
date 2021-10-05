@@ -21,18 +21,29 @@ export interface CookieValues {
 }
 export interface CookieManager {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  cookies?: { [name: string]: any };
-  setCookie?: (
+  cookies: { [name: string]: any };
+  setCookie: (
     name: string,
     value: string,
     options?: CookieSetOptions | undefined
   ) => void;
-  removeCookie?: (name: string) => void;
-  clearCookies?: () => void;
+  removeCookie: (name: string) => void;
+  clearCookies: () => void;
 }
 
 export const AppContext = React.createContext<SettingsForApp>({ name: "" });
-export const CookieContext = React.createContext<CookieManager>({});
+export const CookieContext = React.createContext<CookieManager>({
+  cookies: {},
+  setCookie: (
+    name: string,
+    value: string,
+    options?: CookieSetOptions | undefined
+  ) => {},
+  removeCookie: (name: string) => {},
+  clearCookies: () => {
+    console.log("former");
+  },
+});
 export const MessagingContext = React.createContext({});
 
 function App({ children }: { children: ReactNode }) {
@@ -42,6 +53,7 @@ function App({ children }: { children: ReactNode }) {
     "userId",
   ]); // not depending on token as it will change with refresh
   const clearCookies = () => {
+    console.log("clearing");
     removeCookie("username");
     removeCookie("token");
     removeCookie("role");
