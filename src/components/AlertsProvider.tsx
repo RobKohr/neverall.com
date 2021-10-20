@@ -80,7 +80,7 @@ export default function AlertsProvider({ children }: Props) {
 
   return (
     <>
-      {alerts.length && (
+      {alerts.length > 0 && (
         <div className="alert-groups">
           <div className="alerts errors">
             {alerts

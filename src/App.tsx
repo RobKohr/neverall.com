@@ -53,7 +53,6 @@ function App({ children }: { children: ReactNode }) {
     "userId",
   ]); // not depending on token as it will change with refresh
   const clearCookies = () => {
-    console.log("clearing");
     removeCookie("username");
     removeCookie("token");
     removeCookie("role");

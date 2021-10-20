@@ -1,6 +1,7 @@
 import React from "react";
 import { Router, Link } from "@reach/router";
 import { ReactComponent as Logo } from "./neverall-logo.svg";
+import { apps } from "../../constants";
 
 const Home = ({ app }) => (
   <div>
@@ -14,7 +15,17 @@ const Home = ({ app }) => (
       during a month. Would you like to earn revenue on your creations? Sign up
       and let us know what you are looking to create.
     </p>
-    <Link to="/godot-asset-store">Godot Asset Store</Link>
+    <ul>
+      {Object.keys(apps).map((key) => {
+        const { name, title } = apps[key];
+        if (name === "main") return <></>;
+        return (
+          <li>
+            <Link to={`/${name}`}>{title}</Link>
+          </li>
+        );
+      })}
+    </ul>
   </div>
 );
 
