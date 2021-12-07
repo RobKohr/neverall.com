@@ -31,6 +31,7 @@
     "bcryptjs": "^2.4.3",
     "connect-mongodb-session": "^2.4.1",
     "dotenv": "^8.2.0",
+    "eslint": "^8.4.0",
     "eslint-config-airbnb-typescript-prettier": "^4.2.0",
     "express-session": "^1.17.2",
     "joi": "^17.4.0",
