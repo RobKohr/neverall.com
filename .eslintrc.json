@@ -1,5 +1,7 @@
 {
-  "extends": ["airbnb-typescript-prettier", "plugin:jest/recommended"],
+  "extends": [
+    // "airbnb-typescript-prettier", 
+    "plugin:jest/recommended"],
 
   "env": {
     "jest/globals": true
@@ -13,19 +15,19 @@
     "no-console": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "import/prefer-default-export": "off",
-    "prettier/prettier": ["error"],
+   // "prettier/prettier": ["error"],
     "react/jsx-props-no-spreading": "off",
     "react/require-default-props": "off",
     "import/no-named-as-default": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
     "import/no-unresolved": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "jsx-a11y/label-has-associated-control": [
-      2,
-      {
-        "assert": "either"
-      }
-    ]
+    "@typescript-eslint/no-unused-vars": "off"
+    // "jsx-a11y/label-has-associated-control": [
+    //   2,
+    //   {
+    //     "assert": "either"
+    //   }
+    // ]
   },
 
   "settings": {

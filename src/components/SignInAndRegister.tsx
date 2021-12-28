@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AppContext, CookieContext } from "App";
-import { navigate } from "@reach/router";
+import { useNavigate } from "react-router-dom";
 import { Input, Submit, Form } from "./forms";
 import { registerSchema, loginSchema } from "../schemas/users.schema";
 import A from "./A";
@@ -16,7 +16,7 @@ export default function SignInAndRegister({ title }: { title: string }) {
     handleErrorResponse,
   } = useContext(AlertsContext);
   const app = useContext(AppContext);
-
+  const navigate = useNavigate();
   const [values, setValues] = useState<Values>({ username: "", password: "" });
   const formType = title === "Sign In" ? "login" : "register";
   const { setCookie } = useContext(CookieContext);

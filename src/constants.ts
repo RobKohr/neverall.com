@@ -1,6 +1,10 @@
 import { SettingsForApps } from "App";
 
-export const apps = {
+interface Apps {
+  [name: string]: { name: string; title?: string };
+}
+
+export const apps: Apps = {
   main: { name: "main" },
   godotassetstore: { name: "godot-asset-store", title: "Godot Asset Store" },
   islandwarfare: { name: "island-warfare", title: "Island Warfare" },

@@ -18,5 +18,5 @@
     "baseUrl": "src",
   },
   "plugins": ["react"],
-  "include": ["src", "./src/**/*.ts"]
+  "include": ["src", "./src/**/*.ts", "./src/**/*.svg"]
 }

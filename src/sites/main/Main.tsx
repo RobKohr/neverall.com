@@ -1,9 +1,15 @@
 import React from "react";
-import { Router, Link } from "@reach/router";
-import { ReactComponent as Logo } from "./neverall-logo.svg";
+//import { ReactComponent as Logo } from "./neverall-logo.svg";
 import { apps } from "../../constants";
+import { Link, Routes, Route } from "react-router-dom";
+interface Props {
+  app: {
+    name: string;
+    title: string;
+  };
+}
 
-const Home = ({ app }) => (
+const Home = ({ app }: Props) => (
   <div>
     <h2>Welcome {app.name}</h2>
     <p>
@@ -17,7 +23,8 @@ const Home = ({ app }) => (
     </p>
     <ul>
       {Object.keys(apps).map((key) => {
-        const { name, title } = apps[key];
+        const app = apps[key];
+        const { name, title } = app;
         if (name === "main") return <></>;
         return (
           <li>
@@ -35,19 +42,17 @@ const Dashboard = () => (
   </div>
 );
 
-export default function Main(props) {
+export default function Main(props: Props) {
   return (
     <div>
-      <div>
-        <Logo style={{ fill: "white" }} />
-      </div>
+      <div>{/* <Logo style={{ fill: "white" }} /> */}</div>
       <nav>
         <Link to="/">Home</Link> <Link to="dashboard">Dashboard</Link>
       </nav>
-      <Router>
-        <Home path="/" {...props} />
-        <Dashboard path="dashboard" />
-      </Router>
+      <Routes>
+        <Route element={<Home {...props} />} />
+        <Route element={<Dashboard />} />
+      </Routes>
     </div>
   );
 }
