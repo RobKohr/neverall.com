@@ -1,5 +1,5 @@
 import { AppBar, Tab, Tabs } from "@material-ui/core";
-import { Link, useLocation } from "@reach/router";
+import {  useLocation } from "@reach/router";
 import React from "react";
 
 export function Nav({ routes, role, navId = "main" }) {
@@ -59,9 +59,9 @@ function renderRouteLink({ route, role, location }) {
         </a>
       )}
       {!route.externalLink && (
-        <Link to={to} style={{ color: "white" }}>
+        <A to={to} style={{ color: "white" }}>
           <Tab label={label} />
-        </Link>
+        </A>
       )}
     </div>
   );

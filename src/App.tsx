@@ -8,13 +8,14 @@ import { domainNameAppMapping } from "./constants";
 import { useLocation, BrowserRouter } from "react-router-dom";
 import AlertsProvider from "components/AlertsProvider";
 
-export interface SettingsForApp {
+export interface AppSettings {
   name: string;
   baseUrl?: string;
+  title?: string;
 }
 
 export interface SettingsForApps {
-  [appName: string]: SettingsForApp;
+  [appName: string]: AppSettings;
 }
 
 export interface CookieValues {
@@ -31,7 +32,7 @@ export interface CookieManager {
   clearCookies: () => void;
 }
 
-export const AppContext = React.createContext<SettingsForApp>({ name: "" });
+export const AppContext = React.createContext<AppSettings>({ name: "" });
 export const CookieContext = React.createContext<CookieManager>({
   cookies: {},
   setCookie: (
@@ -74,16 +75,19 @@ function AppUnderRouter({ children }: { children?: ReactNode }) {
     clearCookies,
   };
   const hostname = window.location.hostname;
+  console.log({ hostname });
   const location = useLocation();
   const appFromPathname = location.pathname.split("/")[1];
-
+  console.log({ appFromPathname });
   const settingsForApps = {
     ...(domainNameAppMapping[hostname] ||
       domainNameAppMapping[appFromPathname] ||
       domainNameAppMapping.default),
   };
-  settingsForApps.baseUrl = `/${settingsForApps.name}/`;
-  console.log(settingsForApps);
+
+  settingsForApps.baseUrl = domainNameAppMapping[hostname]
+    ? ""
+    : `/${settingsForApps.name}`;
   const MainOfCurrentApp = lazy(
     () => import(`./sites/${settingsForApps.name}/Main`)
   );

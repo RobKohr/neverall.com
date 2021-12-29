@@ -1,7 +1,6 @@
 import React from "react";
 import SignInAndRegister from "components/SignInAndRegister";
-import { RouteComponentProps } from "@reach/router";
 
-export default function SignIn(_props: RouteComponentProps) {
+export default function SignIn() {
   return <SignInAndRegister title="Register" />;
 }

@@ -2,6 +2,8 @@ import React from "react";
 //import { ReactComponent as Logo } from "./neverall-logo.svg";
 import { apps } from "../../constants";
 import { Link, Routes, Route } from "react-router-dom";
+import { Error404 } from "pages/Error404";
+import A from "components/A";
 interface Props {
   app: {
     name: string;
@@ -28,7 +30,9 @@ const Home = ({ app }: Props) => (
         if (name === "main") return <></>;
         return (
           <li>
-            <Link to={`/${name}`}>{title}</Link>
+            <A absolute to={`${name}`}>
+              {title}
+            </A>
           </li>
         );
       })}
@@ -43,15 +47,17 @@ const Dashboard = () => (
 );
 
 export default function Main(props: Props) {
+  console.log("here");
   return (
     <div>
       <div>{/* <Logo style={{ fill: "white" }} /> */}</div>
       <nav>
-        <Link to="/">Home</Link> <Link to="dashboard">Dashboard</Link>
+        <A to="/">Home</A> <A to="dashboard">Dashboard</A>
       </nav>
       <Routes>
-        <Route element={<Home {...props} />} />
-        <Route element={<Dashboard />} />
+        <Route path="/" element={<Home {...props} />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </div>
   );
