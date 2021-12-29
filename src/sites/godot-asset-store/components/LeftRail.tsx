@@ -1,8 +1,6 @@
-import React from "react";
-
-export default function Filters() {
+export default function LeftRail() {
   return (
-    <div id="filters">
+    <div id="left-rail">
       <div>
         <input type="text" id="search" placeholder="search" />
       </div>
