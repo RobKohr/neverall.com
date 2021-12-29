@@ -5,7 +5,11 @@ interface Apps {
 }
 
 export const apps: Apps = {
-  main: { name: "main", baseUrl: "" },
+  main: {
+    name: "main",
+    baseUrl: "",
+    title: "Neverall",
+  },
   godotassetstore: {
     name: "godot-asset-store",
     baseUrl: "godot-asset-store",

@@ -4,7 +4,7 @@ import { CookieSetOptions } from "universal-cookie";
 import { useCookies } from "react-cookie";
 import React, { lazy, ReactNode, Suspense } from "react";
 // import AlertsProvider from "components/AlertsProvider";
-import { domainNameAppMapping } from "./constants";
+import { domainNameAppMapping } from "./appSettings";
 import { useLocation, BrowserRouter } from "react-router-dom";
 import AlertsProvider from "components/AlertsProvider";
 
