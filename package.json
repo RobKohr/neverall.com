@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://localhost:4001",
   "scripts": {
-    "start": "BROWSER=firefox react-scripts start",
+    "start": "BROWSER=firefox react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "server": "nodemon --ignore '**/*.test.js' --watch 'server' -r dotenv/config server/server.js dotenv_config_path=.env",
     "build-and-serve": "npm run build; npm run server",

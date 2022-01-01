@@ -60,22 +60,25 @@ export function remapErrorMessages({
   labels,
 }: RemapErrorMessages) {
   const combinedRemap = (remap || []).concat(defaultRemap);
-  const out: Errors = {};
+  const nameMessageErrorMapping: Errors = {};
   if (!errors) return {};
   errors.forEach(function processError({ context, message }) {
     const name = context?.key;
     if (!name) return;
-    const container = out[name];
+    // const container = nameMessageErrorMapping[name];
     console.warn("remapErrorMessages resolve", {
-      context,
+      // context,
       message,
-      container,
-      combinedRemap,
-      labels,
+      // container,
+      // combinedRemap,
+      // labels,
+      // errors,
+      name,
     });
+    nameMessageErrorMapping[name] = message;
 
     // out[name] = message;
-    //
+
     // if (labels[name]) {
     //   container.message = container.message.replace(
     //     `"${name}"`,
@@ -92,7 +95,7 @@ export function remapErrorMessages({
     // });
   });
 
-  return out;
+  return nameMessageErrorMapping;
 }
 
 interface Props {
@@ -120,6 +123,7 @@ export default function Form({
       abortEarly: false,
     });
     const errorDetails = validation?.error?.details;
+    console.log({ errorDetails });
     const errorsToSet = errorDetails
       ? remapErrorMessages({ errors: errorDetails, remap, labels })
       : null;

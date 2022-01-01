@@ -4,12 +4,14 @@ import LeftRail from "./components/LeftRail";
 import { routes } from "./routes";
 import RouteList from "components/RouteList";
 import LogoContainer from "components/LogoContainer";
-
+import logo from "./logo.png";
 export default function Main({ app }: { app: AppSettings }) {
   return (
     <div className={app.name}>
       <Navbar />
-      <LogoContainer app={app} />
+      <LogoContainer app={app}>
+        <img src={logo} alt="logo" />
+      </LogoContainer>
       <LeftRail />
       <div id="content">
         <RouteList routes={routes} app={app} />

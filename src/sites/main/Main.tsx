@@ -4,6 +4,8 @@ import { apps } from "../../appSettings";
 import { Link, Routes, Route } from "react-router-dom";
 import { Error404 } from "pages/Error404";
 import A from "components/A";
+import { ReactComponent as Logo } from "./neverall-logo.svg";
+import LogoContainer from "components/LogoContainer";
 interface Props {
   app: {
     name: string;
@@ -47,10 +49,11 @@ const Dashboard = () => (
 );
 
 export default function Main(props: Props) {
-  console.log("here");
   return (
     <div>
-      <div>{/* <Logo style={{ fill: "white" }} /> */}</div>
+      <div>
+        <Logo style={{ fill: "white" }} />
+      </div>
       <nav>
         <A to="/">Home</A> <A to="dashboard">Dashboard</A>
       </nav>
