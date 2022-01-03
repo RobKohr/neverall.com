@@ -1,5 +1,4 @@
 import React from "react";
-//import { ReactComponent as Logo } from "./neverall-logo.svg";
 import { apps } from "../../appSettings";
 import { Link, Routes, Route } from "react-router-dom";
 import { Error404 } from "pages/Error404";
