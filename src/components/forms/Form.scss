@@ -1,0 +1,28 @@
+fieldset {
+  label {
+    display: block;
+  }
+  .input-wrapper {
+    margin: 1em 0;
+  }
+}
+
+input {
+  &[type="text"],
+  &[type="password"],
+  &[type="submit"] {
+    padding: 0.5em;
+    border-radius: 0.5em;
+    width: 95%;
+    max-width: 500px;
+  }
+  &[type="submit"] {
+    margin: 1em 0;
+    height: 3em;
+    max-width: 300px;
+    font-size: 1.3em;
+    &:hover {
+      background-color: var(--blue);
+    }
+  }
+}

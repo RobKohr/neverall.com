@@ -1,4 +1,4 @@
-import "./App.scss";
+import "components/forms/Form.scss";
 import "./fontello/css/fontello.css";
 import { CookieSetOptions } from "universal-cookie";
 import { useCookies } from "react-cookie";

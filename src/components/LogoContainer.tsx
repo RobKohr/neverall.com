@@ -10,10 +10,9 @@ export default function LogoContainer({
   children: ReactNode;
 }) {
   return (
-    <div className="logo">
+    <div className="logo-container">
       <A to="">
-        <div id="logo-container">{children}</div>
-        <h1>{app.title}</h1>
+        <div id="logo-image-container">{children}</div>
       </A>
     </div>
   );

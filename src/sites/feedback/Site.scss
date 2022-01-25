@@ -1,0 +1,8 @@
+@import "../../defaults.scss";
+
+// override defaults
+$maxWidthForSlideMenu: 1230px;
+$showFullLogoAt: 1000px;
+
+// load variables into layout
+@import "../../_layout.scss";

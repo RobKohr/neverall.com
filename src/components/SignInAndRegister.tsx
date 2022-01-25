@@ -42,7 +42,9 @@ export default function SignInAndRegister({ title }: { title: string }) {
             }
             addSuccessMessage("User logged in");
             navigate(
-              formType === "register" ? `${app.baseUrl}login` : `${app.baseUrl}`
+              formType === "register"
+                ? `${app.baseUrl}/login`
+                : `${app.baseUrl}/`
             );
           } else {
             handleErrorResponse(res);

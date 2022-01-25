@@ -1,10 +1,16 @@
 {
   "extends": [
-    // "airbnb-typescript-prettier", 
-    "plugin:jest/recommended"],
+    // "airbnb-typescript-prettier",
+    "plugin:jest/recommended"
+  ],
 
   "env": {
-    "jest/globals": true
+    "jest/globals": true,
+    "es6": true
+  },
+
+  "parserOptions": {
+    "ecmaVersion": 2017
   },
 
   "rules": {
@@ -15,7 +21,7 @@
     "no-console": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "import/prefer-default-export": "off",
-   // "prettier/prettier": ["error"],
+    // "prettier/prettier": ["error"],
     "react/jsx-props-no-spreading": "off",
     "react/require-default-props": "off",
     "import/no-named-as-default": "off",

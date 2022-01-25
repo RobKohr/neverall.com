@@ -1,0 +1,14 @@
+:root {
+  --headerBg: #183444;
+  --headerHover: #0a171e; // #223844;
+  --secondaryHeaderBg: #e6eeff;
+  --white: #ffffff;
+  --shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.75);
+  --headerHeight: 3.75rem;
+  --mobileWidth: 400px;
+  --logoContainerWidth: 60px;
+  --fontColor: #333333;
+}
+
+$maxWidthForSlideMenu: 1230px;
+$showFullLogoAt: 1000px;
