@@ -1,3 +1,4 @@
+import { Note } from "components/BasicComponents";
 import React, { useContext } from "react";
 import { FormContext } from "./Form";
 import FormFieldError from "./FormFieldError";
@@ -9,6 +10,7 @@ export default function Input({
   type = "text",
   className = "",
   placeholder,
+  note = "",
 }: {
   name: string;
   label: string;
@@ -16,6 +18,7 @@ export default function Input({
   type?: string;
   className?: string;
   placeholder?: string;
+  note?: string;
 }) {
   const { updateValue, values, validate, setFieldDirty } =
     useContext(FormContext);
@@ -44,6 +47,7 @@ export default function Input({
         className={`form-input form-input-${type} ${className}`}
       />
       <FormFieldError name={name} label={label} />
+      {note && <Note>{note}</Note>}
     </div>
   );
 }

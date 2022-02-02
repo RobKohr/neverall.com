@@ -1,11 +1,12 @@
 import { AppSettings } from "App";
 import { Routes, Route } from "react-router-dom";
 
+export interface Route {
+  path: string;
+  element: () => JSX.Element;
+}
 interface Props {
-  routes: {
-    path: string;
-    element: () => JSX.Element;
-  }[];
+  routes: Route[];
   app: AppSettings;
 }
 
@@ -14,7 +15,6 @@ export default function RouteList({ routes, app }: Props) {
   return (
     <Routes>
       {routes.map(({ path, element: Element }) => {
-        console.log(`${baseUrl}/${path}`);
         return (
           <Route key={path} path={`${baseUrl}/${path}`} element={<Element />} />
         );

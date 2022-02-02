@@ -1,7 +1,7 @@
 import { AppContext, AppSettings } from "App";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { searchSchema } from "schemas/search.schema";
+import { searchSchema } from "schemas/feedback/search.schema";
 import fetchJson from "utils/fetchJson";
 import { AlertsContext } from "./AlertsProvider";
 import { Form, Input } from "./forms";

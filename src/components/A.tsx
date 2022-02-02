@@ -7,14 +7,20 @@ export default function A({
   children,
   absolute = false,
   className = "",
+  onClick = null,
 }: {
-  to: string;
+  to?: string;
+  onClick?: (() => void) | null;
   children: ReactNode;
   absolute?: boolean;
   className?: string;
 }) {
   const app = useContext(AppContext);
   const prefix = absolute ? "" : app.baseUrl ? app.baseUrl + "/" : "";
+  if (onClick) {
+    return <a onClick={onClick}>{children}</a>;
+  }
+
   return (
     <Link to={prefix + to} className={className}>
       {children}

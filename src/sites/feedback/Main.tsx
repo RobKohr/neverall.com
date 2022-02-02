@@ -12,6 +12,12 @@ import "./Site.scss";
 
 export default function Main({ app }: { app: AppSettings }) {
   const linkPrefix = "editthis-info/";
+  const menu = [
+    { label: "Create A Forum", to: "create" },
+    { label: "Login/Register", to: "login" },
+    { label: "Logout", to: "logout" },
+  ];
+
   return (
     <div className={`app-${app.name} main-app-container`}>
       <div id="header">
@@ -22,23 +28,12 @@ export default function Main({ app }: { app: AppSettings }) {
           </div>
         </LogoContainer>
         <Search />
-        <HeaderMenu />
+        <HeaderMenu menu={menu} />
       </div>
-      <div id="content">
-        <Lipsum paragraphs={30} />
-      </div>
-    </div>
-  );
-
-  return (
-    <div className={app.name}>
-      <Navbar />
-      <LogoContainer app={app}>
-        <img src={logo} alt="logo" />
-      </LogoContainer>
-      <LeftRail linkPrefix={linkPrefix} />
       <div id="content">
         <RouteList routes={routes} app={app} />
+        {/* 
+        <Lipsum paragraphs={30} /> */}
       </div>
     </div>
   );

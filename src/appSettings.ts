@@ -1,7 +1,7 @@
-import {SettingsForApps} from "App";
+import { SettingsForApps } from "App";
 
 interface Apps {
-  [name: string]: {name: string; title?: string; baseUrl?: string};
+  [name: string]: { name: string; title?: string; baseUrl?: string };
 }
 
 export const apps: Apps = {
@@ -32,6 +32,6 @@ export const domainNameAppMapping: SettingsForApps = {
   "godot-asset-store": apps.godotassetstore,
   "island-warfare": apps.islandwarfare,
   feedback: apps.feedback,
-  "127.0.0.1": apps.islandwarfare,
+  //  "127.0.0.1": apps.islandwarfare, // <--- test out domain name mapped to an individual app
   default: apps.main,
 };

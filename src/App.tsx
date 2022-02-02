@@ -91,7 +91,7 @@ function AppUnderRouter({ children }: { children?: ReactNode }) {
   const MainOfCurrentApp = lazy(
     () => import(`./sites/${settingsForApps.name}/Main`)
   );
-
+  console.log("name", settingsForApps.name);
   return (
     <div className="App">
       <CookieContext.Provider value={cookieManager}>

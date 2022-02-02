@@ -77,7 +77,6 @@ export default function SignInAndRegister({ title }: { title: string }) {
     >
       <div className="page page-sign-in">
         <div>
-          <h2>{title}</h2>
           <fieldset>
             <Input name="username" label="Username" />
             {title === "Register" && <Input name="email" label="Email" />}
@@ -94,7 +93,7 @@ export default function SignInAndRegister({ title }: { title: string }) {
         </div>
         <div>
           {title === "Register" && (
-            <A to="signin">Have an account already? Sign in!</A>
+            <A to="login">Have an account already? Sign in!</A>
           )}
           {title === "Sign In" && <A to="register">No account? Sign up!</A>}
         </div>
