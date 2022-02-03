@@ -5,6 +5,8 @@ import { routes } from "./routes";
 import RouteList from "components/RouteList";
 import LogoContainer from "components/LogoContainer";
 import logo from "./logo.png";
+import { ReactComponent as Logout } from "../../assets/icons/logout.svg";
+
 import Search from "components/Search";
 import Lipsum from "components/Lipsum";
 import HeaderMenu from "components/HeaderMenu";
@@ -17,11 +19,11 @@ export default function Main({ app }: { app: AppSettings }) {
     { label: "Login/Register", to: "login" },
     { label: "Logout", to: "logout" },
   ];
-
   return (
     <div className={`app-${app.name} main-app-container`}>
       <div id="header">
         <LogoContainer app={app}>
+          <Logout stroke="red" />
           <img src={logo} alt="logo" className="small-logo" />
           <div className="big-logo">
             <img src={logo} alt="logo" /> FEEDBACK
@@ -32,8 +34,6 @@ export default function Main({ app }: { app: AppSettings }) {
       </div>
       <div id="content">
         <RouteList routes={routes} app={app} />
-        {/* 
-        <Lipsum paragraphs={30} /> */}
       </div>
     </div>
   );
