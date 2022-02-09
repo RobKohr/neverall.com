@@ -64,6 +64,13 @@ body {
 .error {
   color: red;
 }
+a,
+.link {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
 
 .site-container {
   #header {
