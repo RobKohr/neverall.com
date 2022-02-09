@@ -5,10 +5,14 @@ import Lipsum from "components/Lipsum";
 import PlaceholderImage from "components/PlaceholderImage";
 import { Tab, Tabset } from "components/Tabs";
 import React, { ReactNode, useState } from "react";
-import { forum } from "schemas/feedback/forum.schema";
+import {
+  forum,
+  CreateForumValues,
+  createForumDefaults,
+} from "schemas/feedback/forum.schema";
 
 export default function Create() {
-  const [values, setValues] = useState<Values>({ siteUrl: "", shortName: "" });
+  const [values, setValues] = useState<Values>(createForumDefaults);
   function onSubmit() {}
 
   return (
@@ -19,6 +23,11 @@ export default function Create() {
         </Tabset>
         <fieldset>
           <Input name="siteUrl" label="Your Site URL" />
+          <Input
+            name="name"
+            label="Title"
+            note="This will go on top of all forum pages"
+          />
           <Input
             name="shortName"
             label="Short name for the forum"

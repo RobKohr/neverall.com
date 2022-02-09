@@ -16,6 +16,22 @@ body {
     display: block;
   }
 }
+.inline-block {
+  display: inline-block;
+}
+
+.desktop-only {
+  display: none;
+  @media (min-width: $bannerFlexMinWidth) {
+    display: block;
+  }
+}
+.desktop-only.inline-block {
+  display: none;
+  @media (min-width: $bannerFlexMinWidth) {
+    display: inline-block;
+  }
+}
 
 .card {
   padding: 1rem;
@@ -49,7 +65,7 @@ body {
   color: red;
 }
 
-.main-app-container {
+.site-container {
   #header {
     position: fixed;
     top: 0px;
@@ -65,6 +81,7 @@ body {
     }
     .logo-container {
       display: inline-block;
+      color: var(--logoColor);
       #logo-image-container {
         display: inline-block;
         position: relative;

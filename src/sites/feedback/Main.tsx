@@ -4,13 +4,14 @@ import LeftRail from "./components/LeftRail";
 import { routes } from "./routes";
 import RouteList from "components/RouteList";
 import LogoContainer from "components/LogoContainer";
-import logo from "./logo.png";
-import { ReactComponent as Logout } from "../../assets/icons/logout.svg";
+import { ReactComponent as Logo } from "./logo.svg";
 
 import Search from "components/Search";
 import Lipsum from "components/Lipsum";
 import HeaderMenu from "components/HeaderMenu";
 import "./Site.scss";
+import A from "components/A";
+import NeverallAppsMenu from "components/NeverallAppsMenu";
 
 export default function Main({ app }: { app: AppSettings }) {
   const linkPrefix = "editthis-info/";
@@ -20,15 +21,38 @@ export default function Main({ app }: { app: AppSettings }) {
     { label: "Logout", to: "logout" },
   ];
   return (
-    <div className={`app-${app.name} main-app-container`}>
+    <div className={`app-${app.name} site-container`}>
       <div id="header">
-        <LogoContainer app={app}>
-          <Logout stroke="red" />
-          <img src={logo} alt="logo" className="small-logo" />
-          <div className="big-logo">
-            <img src={logo} alt="logo" /> FEEDBACK
-          </div>
-        </LogoContainer>
+        <NeverallAppsMenu />
+        <div className="logo-container logo" style={{ whiteSpace: "nowrap" }}>
+          <A to="">
+            <Logo
+              style={{
+                width: "45px",
+                height: "46px",
+                fill: "white",
+                display: "inline-block",
+                position: "relative",
+                top: "5px",
+                left: "0",
+              }}
+            />
+            <span
+              className="logo-text desktop-only inline-block"
+              style={{
+                position: "relative",
+                top: "-2px",
+                paddingLeft: "0.5em",
+                fontSize: "1.0rem",
+                color: "white",
+              }}
+            >
+              <span>FEEDBACK</span>
+              <br />
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;FORUMS</span>
+            </span>
+          </A>
+        </div>
         <Search />
         <HeaderMenu menu={menu} />
       </div>

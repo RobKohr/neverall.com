@@ -3,8 +3,9 @@ import { apps } from "../../appSettings";
 import { Link, Routes, Route } from "react-router-dom";
 import { Error404 } from "pages/Error404";
 import A from "components/A";
-import { ReactComponent as Logo } from "./neverall-logo.svg";
+import { ReactComponent as Logo } from "../../assets/icons/neverall-logo.svg";
 import LogoContainer from "components/LogoContainer";
+import "./Site.scss";
 interface Props {
   app: {
     name: string;
@@ -14,6 +15,7 @@ interface Props {
 
 const Home = ({ app }: Props) => (
   <div>
+    {" "}
     <h2>Welcome {app.name}</h2>
     <p>
       Neverall is a creative profit distribution network. Members pay a small
@@ -48,8 +50,9 @@ const Dashboard = () => (
 );
 
 export default function Main(props: Props) {
+  const { app } = props;
   return (
-    <div>
+    <div className={`app-${app.name} site-container`}>
       <div>
         <Logo style={{ fill: "white" }} />
       </div>
