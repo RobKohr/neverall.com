@@ -42,7 +42,7 @@ export const CookieContext = React.createContext<CookieManager>({
   ) => {},
   removeCookie: (name: "username" | "role" | "userId" | "token") => {},
   clearCookies: () => {
-    console.log("former");
+    console.warn("TODO: code something up for clearing cookies");
   },
 });
 export const MessagingContext = React.createContext({});
@@ -75,10 +75,8 @@ function AppUnderRouter({ children }: { children?: ReactNode }) {
     clearCookies,
   };
   const hostname = window.location.hostname;
-  console.log({ hostname });
   const location = useLocation();
   const appFromPathname = location.pathname.split("/")[1];
-  console.log({ appFromPathname });
   const settingsForApps = {
     ...(domainNameAppMapping[hostname] ||
       domainNameAppMapping[appFromPathname] ||
@@ -91,7 +89,6 @@ function AppUnderRouter({ children }: { children?: ReactNode }) {
   const MainOfCurrentApp = lazy(
     () => import(`./sites/${settingsForApps.name}/Main`)
   );
-  console.log("name", settingsForApps.name);
   return (
     <div className="App">
       <CookieContext.Provider value={cookieManager}>

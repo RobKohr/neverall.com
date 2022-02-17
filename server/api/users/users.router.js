@@ -126,7 +126,6 @@ addRoute(
         ],
       },
       function (err, user) {
-        console.log({ err, user });
         if (err) {
           return res.status(401).json({ errorMessage: err.errmsg });
         }

@@ -11,7 +11,6 @@ function createAddRouter({ basePath, router, paths }) {
     const matches = swaggerPath.match(/(\:[a-zA-Z0-9]+)/g);
     if (schema) {
       const { swagger: swaggerSchema, components } = joiToSwagger(schema);
-      console.log(JSON.stringify(swaggerSchema, 0, 5));
       props.requestBody = {
         required: true,
         content: {
@@ -20,7 +19,6 @@ function createAddRouter({ basePath, router, paths }) {
           },
         },
       };
-      console.log({ swaggerSchema });
     }
     if (matches) {
       matches.forEach((match) => {
@@ -42,7 +40,7 @@ function createAddRouter({ basePath, router, paths }) {
             required: true,
           });
         } else {
-          console.log({ alreadyExistsAt });
+          console.error({ alreadyExistsAt });
         }
       });
     }

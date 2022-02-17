@@ -1,4 +1,4 @@
-import { AppSettings } from "App";
+import { AppSettings, CookieContext } from "App";
 import Navbar from "components/Navbar";
 import LeftRail from "./components/LeftRail";
 import { routes } from "./routes";
@@ -8,18 +8,28 @@ import { ReactComponent as Logo } from "./logo.svg";
 
 import Search from "components/Search";
 import Lipsum from "components/Lipsum";
-import HeaderMenu from "components/HeaderMenu";
+import HeaderMenu, { MenuItem } from "components/HeaderMenu";
 import "./Site.scss";
 import A from "components/A";
 import NeverallAppsMenu from "components/NeverallAppsMenu";
+import { useContext } from "react";
 
 export default function Main({ app }: { app: AppSettings }) {
-  const linkPrefix = "editthis-info/";
-  const menu = [
+  const { cookies } = useContext(CookieContext);
+  const menu: MenuItem[] = [
     { label: "Create A Forum", to: "create" },
     { label: "Login/Register", to: "login" },
     { label: "Logout", to: "logout" },
+    {
+      label: "test",
+      subMenu: [
+        { label: "asdf", to: "something" },
+        { label: "asdff", to: "something" },
+        { label: "asdfs", to: "something" },
+      ],
+    },
   ];
+
   return (
     <div className={`app-${app.name} site-container`}>
       <div id="header">

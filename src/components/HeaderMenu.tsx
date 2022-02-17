@@ -1,5 +1,12 @@
 import { useToggle } from "hooks/useToggle";
-import React, { ReactChild, ReactNode, useState } from "react";
+import React, {
+  createContext,
+  ReactChild,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as MenuIcon } from "../assets/icons/menu.svg";
 import { ReactComponent as ChevronDownIcon } from "../assets/icons/chevron-down.svg";
@@ -13,10 +20,48 @@ export interface MenuItem {
   SlideElement?: ReactNode;
 }
 
+export interface MenuSettings {
+  expandedMenu: string;
+}
+
+export interface HeaderMenuContext {
+  expandedMenu: string;
+  setExpandedMenu?: (menuId: string) => void;
+}
+
+const contextDefaults: HeaderMenuContext = {
+  expandedMenu: "",
+  setExpandedMenu: (menuId: string) => {},
+};
+
+const HeaderMenuContext = createContext(contextDefaults);
+
+export interface HeaderMenuContextProviderProps {
+  children: ReactNode;
+}
+
+export function HeaderMenuContextProvider({
+  children,
+}: HeaderMenuContextProviderProps) {
+  const [expandedMenu, setExpandedMenu] = useState("");
+  return (
+    <div className="header-menu-context-provider">
+      <HeaderMenuContext.Provider value={{ expandedMenu, setExpandedMenu }}>
+        {children}
+      </HeaderMenuContext.Provider>
+    </div>
+  );
+}
+
 export default function HeaderMenu({ menu }: { menu: MenuItem[] }) {
   const [showSideMenu, setShowSideMenu] = useState(false);
-  const [expandedMenu, setExpandedMenu] = useState("");
-  console.log({ expandedMenu });
+
+  // function asdf(str: string) {
+  //   console.log({ str });
+  //   replaceme(str);
+  //   console.log("test");
+  // }
+
   // const menu: MenuItem[] = [
   //   //{ element: <button>Start Free Trial</button> },
   //   {
@@ -41,14 +86,16 @@ export default function HeaderMenu({ menu }: { menu: MenuItem[] }) {
   //   { label: "Solutions6", to: "solutions" },
   // ];
   function convertMenuItems(menu: MenuItem[]) {
-    return menu.map((item) => {
+    return menu.map((item, index) => {
       const { HeaderElement: Element, SlideElement, label, to, subMenu } = item;
       if (label && to) {
         if (!Element) {
-          item.HeaderElement = <HeaderMenuItem {...{ label, to }} />;
+          item.HeaderElement = (
+            <HeaderMenuItem key={index} {...{ label, to }} />
+          );
         }
         if (!SlideElement) {
-          item.SlideElement = <HeaderMenuItem {...{ label, to }} />;
+          item.SlideElement = <HeaderMenuItem key={index} {...{ label, to }} />;
         }
       }
       if (label && subMenu) {
@@ -59,8 +106,6 @@ export default function HeaderMenu({ menu }: { menu: MenuItem[] }) {
               {...{
                 label,
                 subMenu: convertedSubMenu,
-                expandedMenu,
-                setExpandedMenu,
                 section: "header",
               }}
             />
@@ -72,8 +117,6 @@ export default function HeaderMenu({ menu }: { menu: MenuItem[] }) {
               {...{
                 label,
                 subMenu: convertedSubMenu,
-                expandedMenu,
-                setExpandedMenu,
                 section: "slide",
               }}
             />
@@ -86,50 +129,55 @@ export default function HeaderMenu({ menu }: { menu: MenuItem[] }) {
 
   const convertedMenuItems = convertMenuItems(menu);
   return (
-    <div id="header-menu">
-      <div id="header-bar-menu-items">
-        <ul>
-          {menu.map(({ HeaderElement }) => {
-            return <>{HeaderElement}</>;
-          })}
-        </ul>
+    <HeaderMenuContextProvider>
+      <div id="header-menu">
+        <div id="header-bar-menu-items">
+          <ul id="top-header-bar-parents">
+            {menu.map(({ HeaderElement }) => {
+              return <>{HeaderElement}</>;
+            })}
+          </ul>
+        </div>
+        <div id="slide-in-menu" className={showSideMenu ? "shown" : "hidden"}>
+          <ul>
+            {menu.map(({ SlideElement, label }) => {
+              return <span key={label}>{SlideElement}</span>;
+            })}
+          </ul>
+        </div>
+        <div
+          onClick={() => {
+            setShowSideMenu(!showSideMenu);
+          }}
+        >
+          <MenuIcon className="menu-icon" />
+        </div>
       </div>
-      <div id="slide-in-menu" className={showSideMenu ? "shown" : "hidden"}>
-        <ul>
-          {menu.map(({ SlideElement, label }) => {
-            return <span key={label}>{SlideElement}</span>;
-          })}
-        </ul>
-      </div>
-      <div
-        onClick={() => {
-          setShowSideMenu(!showSideMenu);
-        }}
-      >
-        <MenuIcon className="menu-icon" />
-      </div>
-    </div>
+    </HeaderMenuContextProvider>
   );
 }
 
 function HeaderMenuExpandableItem({
   label,
   subMenu,
-  setExpandedMenu,
-  expandedMenu,
   section,
 }: {
   label: string;
   subMenu: MenuItem[];
-  setExpandedMenu: (label: string) => void;
-  expandedMenu: string;
   section: "header" | "slide";
 }) {
-  const [expanded, setExpanded] = useState(false);
-  const id = section + label;
+  const { expandedMenu, setExpandedMenu } = useContext(HeaderMenuContext);
+
+  const id = section + ":" + label;
   return (
     <li className="header-menu-item expandable-item">
-      <a onClick={() => setExpandedMenu(expandedMenu === id ? "" : id)}>
+      <a
+        onClick={() => {
+          if (setExpandedMenu) {
+            return setExpandedMenu(expandedMenu === id ? "" : id);
+          }
+        }}
+      >
         {label} <ChevronDownIcon className="expand-icon" />
       </a>
       <ul

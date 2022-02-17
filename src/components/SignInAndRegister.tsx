@@ -18,7 +18,7 @@ export default function SignInAndRegister({ title }: { title: string }) {
   const app = useContext(AppContext);
   const navigate = useNavigate();
   const [values, setValues] = useState<Values>({ username: "", password: "" });
-  const formType = title === "Sign In" ? "login" : "register";
+  const formType = title === "Login" ? "login" : "register";
   const { setCookie } = useContext(CookieContext);
   const schema = formType === "login" ? loginSchema : registerSchema;
   const onSubmit = (valuesToSubmit: Values) => {
@@ -36,9 +36,9 @@ export default function SignInAndRegister({ title }: { title: string }) {
         }) => {
           if (res?.successMessage) {
             if (formType === "login" && setCookie) {
-              setCookie("token", res.token);
-              setCookie("username", res.user.username);
-              setCookie("userId", res.user._id);
+              setCookie("token", res.token, { sameSite: "lax" });
+              setCookie("username", res.user.username, { sameSite: "lax" });
+              setCookie("userId", res.user._id, { sameSite: "lax" });
             }
             addSuccessMessage("User logged in");
             navigate(
@@ -76,6 +76,7 @@ export default function SignInAndRegister({ title }: { title: string }) {
       ]}
     >
       <div className="page page-sign-in">
+        {title}
         <div>
           <fieldset>
             <Input name="username" label="Username" />

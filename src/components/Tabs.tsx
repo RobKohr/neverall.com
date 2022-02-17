@@ -31,7 +31,6 @@ export function Tabset({
 
 export function Tab({ children, id }: { children: ReactNode; id: string }) {
   const { activeTab, setActiveTab } = useContext(TabsetContext);
-  console.log(activeTab);
   return (
     <div
       onClick={() => setActiveTab && setActiveTab(id)}

@@ -38,10 +38,6 @@ app.use("/api", require("./api/api"));
 // Add mongodb session support
 const mongoUrl = process.env.mongoUrl;
 const dbName = process.env.dbName;
-console.log({
-  uri: `${mongoUrl}/${dbName}`,
-  collection: "sessions",
-});
 
 var store = new MongoDBStore({
   uri: `${mongoUrl}/${dbName}`,

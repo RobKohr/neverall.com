@@ -1,4 +1,4 @@
-import { Values } from "components/forms/Form";
+import { Values } from "../../../src/components/forms/Form";
 import joi from "joi";
 
 export interface CreateForumValues extends Values {
