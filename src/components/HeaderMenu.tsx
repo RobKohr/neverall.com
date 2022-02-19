@@ -103,14 +103,14 @@ export default function HeaderMenu({ menu }: { menu: MenuItem[] }) {
       <div id="header-menu">
         <div id="header-bar-menu-items">
           <ul id="top-header-bar-parents">
-            {menu.map(({ HeaderElement }) => {
+            {convertedMenuItems.map(({ HeaderElement }) => {
               return <>{HeaderElement}</>;
             })}
           </ul>
         </div>
         <div id="slide-in-menu" className={showSideMenu ? "shown" : "hidden"}>
           <ul>
-            {menu.map(({ SlideElement, label }) => {
+            {convertedMenuItems.map(({ SlideElement, label }) => {
               return <span key={label}>{SlideElement}</span>;
             })}
           </ul>

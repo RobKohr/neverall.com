@@ -16,6 +16,7 @@ import { useContext } from "react";
 
 export default function Main({ app }: { app: AppSettings }) {
   const { cookies } = useContext(CookieContext);
+  console.log({ cookies });
   const menu: MenuItem[] = [
     { label: "Create A Forum", to: "create" },
     !cookies.username && { label: "Login/Register", to: "login" },
