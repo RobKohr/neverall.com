@@ -55,36 +55,6 @@ export function HeaderMenuContextProvider({
 
 export default function HeaderMenu({ menu }: { menu: MenuItem[] }) {
   const [showSideMenu, setShowSideMenu] = useState(false);
-
-  // function asdf(str: string) {
-  //   console.log({ str });
-  //   replaceme(str);
-  //   console.log("test");
-  // }
-
-  // const menu: MenuItem[] = [
-  //   //{ element: <button>Start Free Trial</button> },
-  //   {
-  //     label: "Solutions1",
-  //     subMenu: [
-  //       { label: "sub 1", to: "sub1" },
-  //       { label: "sub 2 jslkfj lasjf lasjdl;f las;djf l;asdjf ", to: "sub2" },
-  //       { label: "sub 3", to: "sub3" },
-  //     ],
-  //   },
-  //   { label: "Solutions2", to: "solutions" },
-  //   { label: "Solutions3", to: "solutions" },
-  //   { label: "Solutions4", to: "solutions" },
-  //   {
-  //     label: "Solutions5",
-  //     subMenu: [
-  //       { label: "sub 1", to: "sub1" },
-  //       { label: "sub 2", to: "sub2" },
-  //       { label: "sub 3", to: "sub3" },
-  //     ],
-  //   },
-  //   { label: "Solutions6", to: "solutions" },
-  // ];
   function convertMenuItems(menu: MenuItem[]) {
     return menu.map((item, index) => {
       const { HeaderElement: Element, SlideElement, label, to, subMenu } = item;

@@ -18,17 +18,12 @@ export default function Main({ app }: { app: AppSettings }) {
   const { cookies } = useContext(CookieContext);
   const menu: MenuItem[] = [
     { label: "Create A Forum", to: "create" },
-    { label: "Login/Register", to: "login" },
-    { label: "Logout", to: "logout" },
-    {
-      label: "test",
-      subMenu: [
-        { label: "asdf", to: "something" },
-        { label: "asdff", to: "something" },
-        { label: "asdfs", to: "something" },
-      ],
+    !cookies.username && { label: "Login/Register", to: "login" },
+    cookies.username && {
+      label: cookies.username,
+      subMenu: [{ label: "Logout", to: "logout" }],
     },
-  ];
+  ].filter((menuItem) => !!menuItem);
 
   return (
     <div className={`app-${app.name} site-container`}>

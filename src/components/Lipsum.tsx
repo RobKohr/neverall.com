@@ -4,7 +4,7 @@ export default function Lipsum({ paragraphs = 5 }: { paragraphs?: number }) {
   const elements = [];
   for (let i = 0; i < paragraphs; i++) {
     elements.push(
-      <p>
+      <p key={i}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mattis
         mi ac justo tempor, ut tincidunt nibh ornare. Proin neque diam, laoreet
         in eros quis, viverra congue nisl. Vestibulum consectetur sit amet nibh
