@@ -159,8 +159,8 @@ function HeaderMenuExpandableItem({
           expandedMenu === id ? "shown" : "hidden"
         } ${expandedMenu} ${id}`}
       >
-        {subMenu.map(({ HeaderElement, label }) => {
-          return <li key={label}>{HeaderElement}</li>;
+        {subMenu.map(({ HeaderElement, label }, index) => {
+          return <React.Fragment key={index}>{HeaderElement}</React.Fragment>;
         })}
       </ul>
     </li>
