@@ -40,9 +40,11 @@ export const CookieContext = React.createContext<CookieManager>({
     value: string,
     options?: CookieSetOptions | undefined
   ) => {},
-  removeCookie: (name: "username" | "role" | "userId" | "token") => {},
+  removeCookie: (name: "username" | "role" | "userId" | "token") => {
+    console.log("Replaced in provider");
+  },
   clearCookies: () => {
-    console.warn("TODO: code something up for clearing cookies");
+    console.warn("Replaced in provider");
   },
 });
 export const MessagingContext = React.createContext({});
@@ -55,6 +57,11 @@ function App({ children }: { children?: ReactNode }) {
   );
 }
 
+const cookieOptions: CookieSetOptions = {
+  path: "/",
+  sameSite: "lax",
+};
+
 function AppUnderRouter({ children }: { children?: ReactNode }) {
   const [cookies, setCookie, removeCookie] = useCookies([
     "username",
@@ -63,10 +70,11 @@ function AppUnderRouter({ children }: { children?: ReactNode }) {
     "token",
   ]); // not depending on token as it will change with refresh
   const clearCookies = () => {
-    removeCookie("username");
-    removeCookie("token");
-    removeCookie("role");
-    removeCookie("userId");
+    removeCookie("username", cookieOptions);
+    removeCookie("token", cookieOptions);
+    removeCookie("role", cookieOptions);
+    removeCookie("userId", cookieOptions);
+    console.log("cookies cleared");
   };
   const cookieManager: CookieManager = {
     cookies,

@@ -7,6 +7,7 @@ import A from "./A";
 import fetchJson from "../utils/fetchJson";
 import { AlertsContext } from "./AlertsProvider";
 import { Values } from "./forms/Form";
+import { CookieSetOptions } from "universal-cookie";
 
 export default function SignInAndRegister({ title }: { title: string }) {
   const {
@@ -34,11 +35,15 @@ export default function SignInAndRegister({ title }: { title: string }) {
           user: { username: string; role: string; _id: string };
           errorMessages: string[];
         }) => {
+          const cookieOptions: CookieSetOptions = {
+            path: "/",
+            sameSite: "lax",
+          };
           if (res?.successMessage) {
             if (formType === "login" && setCookie) {
-              setCookie("token", res.token, { sameSite: "lax" });
-              setCookie("username", res.user.username, { sameSite: "lax" });
-              setCookie("userId", res.user._id, { sameSite: "lax" });
+              setCookie("token", res.token, cookieOptions);
+              setCookie("username", res.user.username, cookieOptions);
+              setCookie("userId", res.user._id, cookieOptions);
             }
             addSuccessMessage("User logged in");
             navigate(
@@ -75,8 +80,7 @@ export default function SignInAndRegister({ title }: { title: string }) {
         },
       ]}
     >
-      <div className="page page-sign-in">
-        {title}
+      <div className={`page page-sign-in form-${title}`}>
         <div>
           <fieldset>
             <Input name="username" label="Username" />

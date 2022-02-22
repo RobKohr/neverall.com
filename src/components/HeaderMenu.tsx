@@ -73,6 +73,7 @@ export default function HeaderMenu({ menu }: { menu: MenuItem[] }) {
         if (!Element) {
           item.HeaderElement = (
             <HeaderMenuExpandableItem
+              key={index}
               {...{
                 label,
                 subMenu: convertedSubMenu,
@@ -84,6 +85,7 @@ export default function HeaderMenu({ menu }: { menu: MenuItem[] }) {
         if (!SlideElement) {
           item.SlideElement = (
             <HeaderMenuExpandableItem
+              key={index}
               {...{
                 label,
                 subMenu: convertedSubMenu,
@@ -103,8 +105,10 @@ export default function HeaderMenu({ menu }: { menu: MenuItem[] }) {
       <div id="header-menu">
         <div id="header-bar-menu-items">
           <ul id="top-header-bar-parents">
-            {convertedMenuItems.map(({ HeaderElement }) => {
-              return <>{HeaderElement}</>;
+            {convertedMenuItems.map(({ HeaderElement }, index) => {
+              return (
+                <React.Fragment key={index}>{HeaderElement}</React.Fragment>
+              );
             })}
           </ul>
         </div>
