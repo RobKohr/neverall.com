@@ -4,8 +4,9 @@ const session = require("express-session");
 const app = express();
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/" + process.env.dbName, {
+mongoose.connect("mongodb://localhost/" + process.env.dbName + ":27017", {
   useNewUrlParser: true,
+  family: 4,
 });
 var MongoDBStore = require("connect-mongodb-session")(session);
 

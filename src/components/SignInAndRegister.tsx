@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AppContext, CookieContext } from "App";
 import { useNavigate } from "react-router-dom";
-import { Input, Submit, Form } from "./forms";
+import { Input, Submit, Form, jsonHeaders } from "./forms";
 import { registerSchema, loginSchema } from "../schemas/users.schema";
 import A from "./A";
 import fetchJson from "../utils/fetchJson";
@@ -26,7 +26,7 @@ export default function SignInAndRegister({ title }: { title: string }) {
     fetchJson(`/api/users/${formType}`, {
       method: "POST",
       bodyObj: valuesToSubmit,
-      headers: { "Content-Type": "application/json" },
+      headers: jsonHeaders,
     })
       .then(
         (res: {

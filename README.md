@@ -1,10 +1,15 @@
-Font for icon "Bangla MN"
+## install instructions
 
-https://stevenaleong.com/
-how to setup interactive sites.
+Requirements
 
-![](2021-07-08-14-53-35.png)
+- Mongodb
+- Node.js - latest stable
 
-Use hotjar for tracking
+npm install
+npm run server < --- in one terminal
+npm start < -- in a secondary terminal
 
-geomanist font
+Go to app at http://localhost:4000
+and click on feedback (the other apps have broken stylesheets)
+
+Click on register to create an account, then log in.

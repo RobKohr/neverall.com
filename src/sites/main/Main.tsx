@@ -54,7 +54,7 @@ export default function Main(props: Props) {
   return (
     <div className={`app-${app.name} site-container`}>
       <div>
-        <Logo style={{ fill: "white" }} />
+        <Logo style={{ fill: "white", width: "40px" }} />
       </div>
       <nav>
         <A to="/">Home</A> <A to="dashboard">Dashboard</A>

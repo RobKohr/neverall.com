@@ -1,13 +1,9 @@
 import { AppSettings, CookieContext } from "App";
-import Navbar from "components/Navbar";
-import LeftRail from "./components/LeftRail";
 import { routes } from "./routes";
 import RouteList from "components/RouteList";
-import LogoContainer from "components/LogoContainer";
 import { ReactComponent as Logo } from "./logo.svg";
 
 import Search from "components/Search";
-import Lipsum from "components/Lipsum";
 import HeaderMenu, { MenuItem } from "components/HeaderMenu";
 import "./Site.scss";
 import A from "components/A";
@@ -16,7 +12,6 @@ import { useContext } from "react";
 
 export default function Main({ app }: { app: AppSettings }) {
   const { cookies } = useContext(CookieContext);
-  console.log({ cookies });
   const menu: MenuItem[] = [
     {
       label: "Create A Forum",
