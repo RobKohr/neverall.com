@@ -1,0 +1,18 @@
+<script lang="ts">
+	export let paragraphs = 5;
+	const paragraphText = [
+		'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum posuere odio libero, id tristique mauris semper ut. Donec in malesuada ipsum. Aenean vulputate est in mollis feugiat. Nam in lacus nisi. Curabitur maximus tempor velit, vel lobortis dui sodales quis. In rutrum eros eget mauris facilisis accumsan. Morbi scelerisque tortor a aliquet facilisis. Donec a interdum erat, a malesuada odio. Vivamus pretium sed libero eget malesuada. In pharetra sagittis felis, nec eleifend libero viverra at. Sed ac tincidunt nulla. In eu tempus libero. Fusce volutpat ipsum et elit feugiat, a scelerisque orci ultrices. In porttitor arcu nunc, et interdum tellus suscipit nec.',
+		'Vestibulum ut maximus sem, quis laoreet sem. Cras vel metus interdum, hendrerit augue eleifend, pulvinar ligula. Fusce aliquet dui at ligula tempor, quis tristique purus suscipit. Phasellus et dolor nec sem venenatis sodales. Maecenas a neque malesuada quam pulvinar scelerisque. Proin laoreet pharetra sollicitudin. Proin lacinia metus at risus cursus, at hendrerit sem sodales. Mauris ac nulla cursus, semper velit ac, lobortis nunc. Ut blandit et leo nec aliquet. Phasellus dictum lectus quis bibendum auctor. Etiam vehicula felis sed lectus tempus, at fringilla ipsum lobortis. Suspendisse potenti. Praesent molestie lacinia elit ut interdum. Etiam cursus finibus leo et fermentum. Sed rutrum urna nec odio hendrerit hendrerit.',
+		'Pellentesque enim sem, aliquet ut rhoncus nec, bibendum ut sapien. Nullam auctor nisl et turpis pellentesque dictum. Maecenas dictum arcu odio, eu gravida est finibus ut. Nullam vehicula mollis varius. Praesent odio ante, imperdiet vitae porttitor at, lobortis ac massa. Etiam nisi mi, placerat nec ornare bibendum, auctor in orci. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam dictum orci convallis mollis dictum.',
+		'Cras id sollicitudin velit. Proin blandit nisi suscipit varius viverra. Phasellus a lectus ac elit tempor congue. Cras volutpat bibendum malesuada. Phasellus pellentesque sed est sed malesuada. Suspendisse rhoncus lacinia lorem ut cursus. Cras efficitur orci in ligula tincidunt pharetra. Maecenas a massa et tortor tincidunt iaculis. Proin congue aliquam leo a ultrices. Vestibulum ullamcorper sit amet ipsum ac lobortis. In sed ligula nec neque ullamcorper vestibulum id sit amet justo. Aenean cursus tincidunt posuere. Etiam lacinia, libero vitae hendrerit finibus, ante arcu varius lorem, sed elementum libero ipsum blandit nisi. In hac habitasse platea dictumst. Mauris tempus nulla eu ante semper, et vestibulum sem ultrices.',
+		'Cras tincidunt, nunc vitae ullamcorper tincidunt, neque magna viverra massa, quis pretium nisl sem id libero. Cras semper sit amet quam vel lobortis. Sed nisi diam, ullamcorper egestas egestas interdum, vestibulum id orci. Aliquam mollis et ipsum ac dignissim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sem eros, congue id eros sed, euismod tincidunt odio. In et leo feugiat, laoreet lacus a, viverra dolor. In elementum justo mauris, vitae convallis nulla viverra viverra. Nam scelerisque mi mi, quis interdum lorem luctus id. In rutrum vulputate tellus non dignissim. Vestibulum pharetra ante quis libero consequat, at aliquam tortor blandit. Maecenas pharetra hendrerit purus, consequat pretium ligula interdum quis. Cras vitae risus facilisis, auctor enim cursus, elementum leo. '
+	];
+	const outputParagraphs: string[] = [];
+	for (let i = 0; i < paragraphs; i++) {
+		outputParagraphs.push(paragraphText[i % paragraphText.length]);
+	}
+</script>
+
+{#each outputParagraphs as paragraph}
+	<p>{paragraph}</p>
+{/each}
